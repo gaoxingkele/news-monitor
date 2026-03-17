@@ -32,6 +32,8 @@ except ImportError:
     pass
 
 from news_monitor.proxy import get_proxies_for_url, build_httpx_client
+from news_monitor.media_tier import get_tier, get_tier_label
+from news_monitor.trend import record_snapshot
 
 
 # ── Grok API helper ──────────────────────────────────────────────────────────
@@ -238,13 +240,17 @@ async def _generate_deep_report(
         for p in points:
             input_lines.append(f"   - {p}")
 
-        # Add representative article titles
+        # Add representative article titles with tier info
         aids = c.get("article_ids", [])[:5]
         for aid in aids:
             if aid < len(articles):
                 t = articles[aid].get("title_zh") or articles[aid].get("title", "")
                 src = articles[aid].get("source_name", "")
-                input_lines.append(f"   [{src}] {t[:70]}")
+                url = articles[aid].get("source_url", "")
+                tier = get_tier(url) if url else 4
+                tier_tag = f"T{tier}" if tier <= 3 else ""
+                tier_str = f" ({tier_tag})" if tier_tag else ""
+                input_lines.append(f"   [{src}{tier_str}] {t[:70]}")
         input_lines.append("")
 
     user_msg = "\n".join(input_lines)
@@ -500,6 +506,13 @@ async def main():
     with open(txt_path, "w", encoding="utf-8") as f:
         f.write(report_text)
     print(f"TXT: {txt_path}")
+
+    # P1-5: Record trend snapshot
+    try:
+        trend_path = record_snapshot("boao_forum_2026", articles, dist, clusters)
+        print(f"Trend: {trend_path}")
+    except Exception as exc:
+        print(f"Trend snapshot failed: {exc}")
 
     print(f"\nDone! Report: {len(report_text)} chars, {len(clusters)} clusters")
 

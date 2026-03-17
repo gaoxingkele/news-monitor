@@ -46,6 +46,16 @@ from news_monitor.sources.gemini_search import GeminiSearch
 from news_monitor.sources.grok_search import GrokWebSearch, GrokXSearch
 from news_monitor.translation.llm_translator import LLMTranslator
 from news_monitor.filter.sentiment_classifier import SentimentClassifier
+from news_monitor.checkpoint import (
+    articles_to_json as _articles_to_json,
+    articles_from_json as _articles_from_json,
+    save as _save_checkpoint_unified,
+    load as _load_checkpoint_unified,
+    find_latest as _find_latest_checkpoint_unified,
+    CHECKPOINT_DIR as _CHECKPOINT_DIR,
+)
+from news_monitor.media_tier import get_tier, get_tier_badge
+from news_monitor.trend import record_snapshot
 
 
 # ── Logging: terminal + file, always flushed ──────────────────────────────────
@@ -162,8 +172,38 @@ def _engine_label(api_source: str) -> str:
     return _MAP.get(api_source, api_source)
 
 
+def _filter_blocked(articles: list[NewsArticle]) -> list[NewsArticle]:
+    """Early domain filter -- remove blocked domains before dedup/translation."""
+    pre = len(articles)
+    filtered = [a for a in articles if not (a.source_url and _is_blocked_domain(a.source_url))]
+    removed = pre - len(filtered)
+    if removed:
+        log(f"  Early domain filter: removed {removed} blocked articles")
+    return filtered
+
+
+def _is_grok_x_result(art: NewsArticle) -> bool:
+    """Check if article is from Grok X search (typically Twitter/X posts)."""
+    url = art.source_url or ""
+    return "x.com/" in url or "twitter.com/" in url or art.api_source == "grok_x_search"
+
+
+def _clean_grok_x_title(title: str) -> str:
+    """Clean Grok X search result titles which often contain search query artifacts."""
+    import re
+    # Strip "Post [post:XX] by Author (@handle, role), Date" format
+    m = re.match(r'Post\s+\[post:\d+\]\s+by\s+.+?,\s*\w{3}\s+\w{3}\s+\d+.*?GMT[^:]*:\s*(.*)', title, re.DOTALL)
+    if m:
+        return m.group(1).strip() or title
+    # Strip numbered list items from batch results
+    m2 = re.match(r'^\d+\.\s+(.+)', title)
+    if m2:
+        return m2.group(1).strip()
+    return title
+
+
 def _dedup_merge(articles: list[NewsArticle]) -> list[NewsArticle]:
-    """Dedup by normalized URL, merging found_by. Filter blocked domains."""
+    """Dedup by normalized URL, merging found_by. Filter blocked domains (safety net)."""
     seen: dict[str, NewsArticle] = {}
     order: list[str] = []
     blocked_count = 0
@@ -245,6 +285,37 @@ def _parse_topic_file(path: str) -> dict:
     for s in sections:
         all_queries.extend(s)
 
+    # P0-1: For event topics, wrap multi-word event names in quotes for exact matching
+    topic_type = meta.get("type", "")
+    if topic_type == "event":
+        event_names = []
+        for key in ("event_name_en", "event_name_zh"):
+            name = meta.get(key, "")
+            if name and " " in name:
+                event_names.append(name)
+        if event_names:
+            quoted_queries = []
+            for q in all_queries:
+                new_q = q
+                for name in event_names:
+                    # Only quote if name appears unquoted in the query
+                    if name in new_q and f'"{name}"' not in new_q:
+                        new_q = new_q.replace(name, f'"{name}"')
+                quoted_queries.append(new_q)
+            all_queries = quoted_queries
+            # Also update sections
+            new_sections = []
+            for sec in sections:
+                new_sec = []
+                for q in sec:
+                    new_q = q
+                    for name in event_names:
+                        if name in new_q and f'"{name}"' not in new_q:
+                            new_q = new_q.replace(name, f'"{name}"')
+                    new_sec.append(new_q)
+                new_sections.append(new_sec)
+            sections = new_sections
+
     meta["query_groups"] = all_queries
     meta["_sections"] = [s for s in sections if s]
     return meta
@@ -277,24 +348,6 @@ def _find_topic_file(query: str) -> str | None:
 
 # ── JSON sidecar ──────────────────────────────────────────────────────────────
 
-def _articles_to_json(articles: list[NewsArticle]) -> list[dict]:
-    out = []
-    for a in articles:
-        d = {
-            "title": a.title, "source_url": a.source_url,
-            "source_name": a.source_name, "description": a.description,
-            "language": a.language, "api_source": a.api_source,
-            "found_by": a.found_by, "topic_name": a.topic_name,
-            "title_zh": a.title_zh, "description_zh": a.description_zh,
-            "summary_zh": a.summary_zh, "event_date": a.event_date,
-            "category": a.category, "fingerprint": a.fingerprint,
-        }
-        if a.published_at:
-            d["published_at"] = a.published_at.isoformat()
-        out.append(d)
-    return out
-
-
 def _save_articles_json(articles: list[NewsArticle], md_path: str) -> str:
     json_path = md_path.replace(".md", ".json")
     with open(json_path, "w", encoding="utf-8") as f:
@@ -302,45 +355,9 @@ def _save_articles_json(articles: list[NewsArticle], md_path: str) -> str:
     return json_path
 
 
-def _articles_from_json(data: list[dict]) -> list[NewsArticle]:
-    """Deserialize articles from JSON dicts."""
-    arts = []
-    for d in data:
-        a = NewsArticle(
-            title=d.get("title", ""),
-            source_url=d.get("source_url", ""),
-            source_name=d.get("source_name", ""),
-            description=d.get("description", ""),
-            language=d.get("language", ""),
-            api_source=d.get("api_source", ""),
-            found_by=d.get("found_by", []),
-            topic_name=d.get("topic_name", ""),
-            title_zh=d.get("title_zh", ""),
-            description_zh=d.get("description_zh", ""),
-            summary_zh=d.get("summary_zh", ""),
-            event_date=d.get("event_date", ""),
-            category=d.get("category", ""),
-            fingerprint=d.get("fingerprint", ""),
-        )
-        if d.get("published_at"):
-            try:
-                a.published_at = datetime.fromisoformat(d["published_at"])
-            except (ValueError, TypeError):
-                pass
-        arts.append(a)
-    return arts
+# ── Checkpoint wrappers (delegate to unified module) ─────────────────────────
 
-
-# ── Checkpoint system ─────────────────────────────────────────────────────────
-
-_CHECKPOINT_DIR = "output/checkpoints"
-
-# Stages: fetch_dedup → translated → sentiment → done
 _STAGES = ["fetch_dedup", "translated", "sentiment"]
-
-
-def _checkpoint_path(event_key: str, stage: str) -> str:
-    return str(Path(_CHECKPOINT_DIR) / f"{event_key}_{stage}.json")
 
 
 def _save_checkpoint(
@@ -349,48 +366,23 @@ def _save_checkpoint(
     articles: list[NewsArticle],
     extra: dict | None = None,
 ) -> str:
-    """Save articles + metadata at a checkpoint stage."""
-    Path(_CHECKPOINT_DIR).mkdir(parents=True, exist_ok=True)
-    path = _checkpoint_path(event_key, stage)
-    payload = {
-        "stage": stage,
-        "count": len(articles),
-        "saved_at": datetime.now(timezone.utc).isoformat(),
-        "articles": _articles_to_json(articles),
-    }
-    if extra:
-        payload["extra"] = extra
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(payload, f, ensure_ascii=False, indent=1)
-    log(f"  [checkpoint] {stage}: saved {len(articles)} articles → {path}")
+    path = _save_checkpoint_unified(event_key, stage, articles, extra)
+    log(f"  [checkpoint] {stage}: saved {len(articles)} articles -> {path}")
     return path
 
 
 def _load_checkpoint(event_key: str, stage: str) -> tuple[list[NewsArticle], dict] | None:
-    """Load a checkpoint. Returns (articles, extra) or None."""
-    path = _checkpoint_path(event_key, stage)
-    if not os.path.exists(path):
+    result = _load_checkpoint_unified(event_key, stage)
+    if result is None:
         return None
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            payload = json.load(f)
-        articles = _articles_from_json(payload.get("articles", []))
-        extra = payload.get("extra", {})
-        saved_at = payload.get("saved_at", "?")
-        log(f"  [checkpoint] {stage}: loaded {len(articles)} articles (saved {saved_at})")
-        return articles, extra
-    except Exception as exc:
-        log_err(f"  [checkpoint] failed to load {path}: {exc}")
-        return None
+    articles, extra = result
+    saved_at = extra.get("_saved_at", "?")
+    log(f"  [checkpoint] {stage}: loaded {len(articles)} articles (saved {saved_at})")
+    return articles, extra
 
 
 def _find_latest_checkpoint(event_key: str) -> str | None:
-    """Find the latest completed checkpoint stage."""
-    for stage in reversed(_STAGES):
-        path = _checkpoint_path(event_key, stage)
-        if os.path.exists(path):
-            return stage
-    return None
+    return _find_latest_checkpoint_unified(event_key, _STAGES)
 
 
 # ── Fetcher helpers ───────────────────────────────────────────────────────────
@@ -685,8 +677,10 @@ def _render_cluster_md(
             lines.append(summary[:400])
             lines.append("")
         engine_tag = f" `[{'+'.join(rep.found_by)}]`" if rep.found_by else ""
+        tier_badge = get_tier_badge(rep.source_url) if rep.source_url else ""
+        tier_str = f" `{tier_badge}`" if tier_badge else ""
         pub_str = rep.published_at.strftime("%Y-%m-%d %H:%M") if rep.published_at else "N/A"
-        lines.append(f"> **来源：** {rep.source_name or 'N/A'}{engine_tag}  |  **发布：** {pub_str}  |  **重要度：** {'★' * importance}")
+        lines.append(f"> **来源：** {rep.source_name or 'N/A'}{tier_str}{engine_tag}  |  **发布：** {pub_str}  |  **重要度：** {'★' * importance}")
         if rep.source_url:
             lines.append(f"> **链接：** {rep.source_url}")
     else:
@@ -704,14 +698,16 @@ def _render_cluster_md(
         if summary and summary != attitude:
             lines.append(summary[:400])
             lines.append("")
-        # List other articles in cluster
+        # List other articles in cluster (with tier badge)
         for a in cluster[1:]:
             a_title = (a.title_zh or a.title or "")[:60]
             a_src = a.source_name or "N/A"
+            a_tier = get_tier_badge(a.source_url) if a.source_url else ""
+            tier_prefix = f"{a_tier} " if a_tier else ""
             if a.source_url:
-                lines.append(f"- [{a_src}] {a_title} — {a.source_url}")
+                lines.append(f"- {tier_prefix}[{a_src}] {a_title} — {a.source_url}")
             else:
-                lines.append(f"- [{a_src}] {a_title}")
+                lines.append(f"- {tier_prefix}[{a_src}] {a_title}")
 
     lines += ["", "---", ""]
     return lines
@@ -798,8 +794,8 @@ def _generate_sentiment_md(
             continue
 
         emoji = _SENTIMENT_EMOJI.get(cat_key, "")
-        # Sort by importance before clustering
-        arts.sort(key=lambda a: importance_map.get(a.title_zh or a.title, 3), reverse=True)
+        # P1-4: Sort by tier (lower=better) then importance (higher=better)
+        arts.sort(key=lambda a: (get_tier(a.source_url) if a.source_url else 4, -importance_map.get(a.title_zh or a.title, 3)))
 
         # Cluster
         clusters = _cluster_articles(arts)
@@ -831,6 +827,29 @@ def _generate_sentiment_md(
                 lines.append(f"- {title}{count} — {src}")
             lines += ["", "---", ""]
 
+        # P1-7: Social media section for Grok X results within this category
+        social_arts = [a for a in arts if _is_grok_x_result(a)]
+        if social_arts:
+            lines += [f"#### 社交媒体舆情（{len(social_arts)} 条）", ""]
+            for sa in social_arts[:10]:
+                sa_title = (sa.title_zh or sa.title or "")[:80]
+                # Extract handle from URL if possible
+                handle = ""
+                if sa.source_url:
+                    import re as _re
+                    m = _re.search(r'(?:x\.com|twitter\.com)/([^/]+)', sa.source_url)
+                    if m:
+                        handle = f"@{m.group(1)}"
+                handle_str = f" ({handle})" if handle else ""
+                pub = sa.published_at.strftime("%m-%d") if sa.published_at else ""
+                pub_str = f" [{pub}]" if pub else ""
+                lines.append(f"- {sa_title}{handle_str}{pub_str}")
+                if sa.source_url:
+                    lines.append(f"  {sa.source_url}")
+            if len(social_arts) > 10:
+                lines.append(f"- *...及其他 {len(social_arts) - 10} 条*")
+            lines += ["", "---", ""]
+
     return "\n".join(lines)
 
 
@@ -839,6 +858,7 @@ def _generate_sentiment_md(
 async def _run_event(
     topic: dict, config: dict, overseas_proxy: str, sources_cfg: dict,
     resume: bool = False,
+    incremental: bool = False,
 ) -> None:
     """Run the full event monitoring pipeline with checkpoint support."""
 
@@ -875,6 +895,16 @@ async def _run_event(
             log(f"{_GREEN}Resuming from checkpoint: {resume_stage}{_RESET}")
         else:
             log("No checkpoint found, starting fresh.")
+
+    # P1-6: Incremental mode -- adjust from_date based on last checkpoint time
+    if incremental and resume_stage:
+        loaded = _load_checkpoint(event_key, resume_stage)
+        if loaded:
+            _, inc_extra = loaded
+            last_saved = inc_extra.get("_saved_at", "")
+            if last_saved:
+                from_date = last_saved[:10]  # YYYY-MM-DD
+                log(f"Incremental mode: fetching from {from_date}")
 
     log(f"Event     : {event_name_zh} ({event_name_en})")
     log(f"Dates     : {from_date} -> {to_date}")
@@ -999,6 +1029,14 @@ async def _run_event(
         raw_total = len(all_arts)
         log(f"\n{'=' * 72}")
         log(f"Raw totals: {' | '.join(f'{k}: {v}' for k, v in source_counts.items())} | Total: {raw_total}")
+
+        # P0-2: Early domain filter -- before dedup to avoid wasting translation tokens
+        all_arts = _filter_blocked(all_arts)
+
+        # P1-7: Clean Grok X titles
+        for a in all_arts:
+            if _is_grok_x_result(a):
+                a.title = _clean_grok_x_title(a.title)
 
         # -- Dedup
         unique = _dedup_merge(all_arts)
@@ -1171,6 +1209,16 @@ async def _run_event(
     except Exception as exc:
         log_err(f"PDF generation failed: {exc}")
 
+    # P1-5: Record trend snapshot
+    sentiment_dist: dict[str, int] = {}
+    for art in unique:
+        sentiment_dist[art.category] = sentiment_dist.get(art.category, 0) + 1
+    try:
+        trend_path = record_snapshot(event_key, unique, sentiment_dist)
+        log(f"Trend snapshot saved: {trend_path}")
+    except Exception as exc:
+        log_err(f"Trend snapshot failed: {exc}")
+
 
 async def main(args: list[str]) -> None:
     _init_log()  # Start dual logging (terminal + file)
@@ -1179,8 +1227,9 @@ async def main(args: list[str]) -> None:
     overseas_proxy = config.get("proxy", {}).get("overseas_proxy", "")
     sources_cfg = config.get("sources", {})
 
-    # Parse --resume flag
+    # Parse flags
     resume = "--resume" in args
+    incremental = "--incremental" in args
     positional = [a for a in args if not a.startswith("--")]
     query = positional[0] if positional else "boao"
 
@@ -1195,7 +1244,7 @@ async def main(args: list[str]) -> None:
 
     log(f"Topic file: {topic_file}")
     topic = _parse_topic_file(topic_file)
-    await _run_event(topic, config, overseas_proxy, sources_cfg, resume=resume)
+    await _run_event(topic, config, overseas_proxy, sources_cfg, resume=resume, incremental=incremental)
 
 
 if __name__ == "__main__":

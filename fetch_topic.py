@@ -40,6 +40,14 @@ from news_monitor.sources.grok_search import GrokWebSearch, GrokXSearch
 from news_monitor.sources.tavily_search import TavilySearch
 from news_monitor.topics.loader import load_topics_from_dir
 from news_monitor.translation.llm_translator import LLMTranslator
+from news_monitor.checkpoint import (
+    articles_to_json as _articles_to_json,
+    articles_from_json as _articles_from_json,
+    save as _save_ckpt_unified,
+    load as _load_ckpt_unified,
+    find_latest as _find_latest_ckpt_unified,
+    CHECKPOINT_DIR as _CHECKPOINT_DIR,
+)
 
 # country_code -> (中文名, English name)
 _COUNTRY_NAMES: dict[str, tuple[str, str]] = {
@@ -167,9 +175,19 @@ def _normalize_url(url: str) -> str:
         return url.lower().strip("/")
 
 
+def _filter_blocked(articles: list[NewsArticle]) -> list[NewsArticle]:
+    """Early domain filter -- remove blocked domains before dedup/translation."""
+    pre = len(articles)
+    filtered = [a for a in articles if not (a.source_url and _is_blocked_domain(a.source_url))]
+    removed = pre - len(filtered)
+    if removed:
+        print(f"  Early domain filter: removed {removed} blocked articles")
+    return filtered
+
+
 def _dedup_merge(articles: list[NewsArticle]) -> list[NewsArticle]:
     """Dedup by normalized URL, merging found_by across duplicates.
-    Also filters out blocked Chinese content domains.
+    Also filters out blocked Chinese content domains (safety net).
     """
     seen: dict[str, NewsArticle] = {}
     order: list[str] = []
@@ -218,57 +236,6 @@ def _engine_label(api_source: str) -> str:
 
 # -- JSON sidecar (save/load filtered articles for merging) --------------------
 
-def _articles_to_json(articles: list[NewsArticle]) -> list[dict]:
-    """Serialize articles to JSON-safe dicts."""
-    out = []
-    for a in articles:
-        d = {
-            "title": a.title, "source_url": a.source_url,
-            "source_name": a.source_name, "description": a.description,
-            "language": a.language, "country": a.country,
-            "api_source": a.api_source, "found_by": a.found_by,
-            "topic_name": a.topic_name, "title_zh": a.title_zh,
-            "description_zh": a.description_zh, "summary_zh": a.summary_zh,
-            "event_date": a.event_date, "category": a.category,
-            "fingerprint": a.fingerprint,
-        }
-        if a.published_at:
-            d["published_at"] = a.published_at.isoformat()
-        out.append(d)
-    return out
-
-
-def _articles_from_json(data: list[dict]) -> list[NewsArticle]:
-    """Deserialize articles from JSON dicts."""
-    from datetime import datetime, timezone
-    arts = []
-    for d in data:
-        a = NewsArticle(
-            title=d.get("title", ""),
-            source_url=d.get("source_url", ""),
-            source_name=d.get("source_name", ""),
-            description=d.get("description", ""),
-            language=d.get("language", ""),
-            country=d.get("country", ""),
-            api_source=d.get("api_source", ""),
-            found_by=d.get("found_by", []),
-            topic_name=d.get("topic_name", ""),
-            title_zh=d.get("title_zh", ""),
-            description_zh=d.get("description_zh", ""),
-            summary_zh=d.get("summary_zh", ""),
-            event_date=d.get("event_date", ""),
-            category=d.get("category", ""),
-            fingerprint=d.get("fingerprint", ""),
-        )
-        if d.get("published_at"):
-            try:
-                a.published_at = datetime.fromisoformat(d["published_at"])
-            except (ValueError, TypeError):
-                pass
-        arts.append(a)
-    return arts
-
-
 def _save_articles_json(articles: list[NewsArticle], md_path: str) -> str:
     """Save articles as JSON sidecar next to the MD report."""
     json_path = md_path.replace(".md", ".json")
@@ -277,67 +244,41 @@ def _save_articles_json(articles: list[NewsArticle], md_path: str) -> str:
     return json_path
 
 
-# ── Checkpoint system ─────────────────────────────────────────────────────────
+# ── Checkpoint wrappers (delegate to unified module) ─────────────────────────
 
-_CHECKPOINT_DIR = "output/checkpoints"
 _COUNTRY_STAGES = ["fetch_dedup", "translated", "filtered"]
 
 
-def _ckpt_path(country_code: str, stage: str) -> str:
-    from pathlib import Path
-    return str(Path(_CHECKPOINT_DIR) / f"country_{country_code}_{stage}.json")
+def _ckpt_key(country_code: str) -> str:
+    return f"country_{country_code}"
 
 
 def _save_ckpt(country_code: str, stage: str, articles: list[NewsArticle], extra: dict | None = None) -> None:
-    """Save checkpoint after a pipeline stage."""
-    from pathlib import Path
-    from datetime import datetime, timezone
-    Path(_CHECKPOINT_DIR).mkdir(parents=True, exist_ok=True)
-    path = _ckpt_path(country_code, stage)
-    payload = {
-        "stage": stage,
-        "country": country_code,
-        "count": len(articles),
-        "saved_at": datetime.now(timezone.utc).isoformat(),
-        "articles": _articles_to_json(articles),
-    }
-    if extra:
-        payload["extra"] = extra
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(payload, f, ensure_ascii=False, indent=1)
-    print(f"  [checkpoint] {stage}: saved {len(articles)} articles → {path}")
+    path = _save_ckpt_unified(_ckpt_key(country_code), stage, articles, extra)
+    print(f"  [checkpoint] {stage}: saved {len(articles)} articles -> {path}")
 
 
 def _load_ckpt(country_code: str, stage: str) -> tuple[list[NewsArticle], dict] | None:
-    """Load checkpoint. Returns (articles, extra) or None."""
-    path = _ckpt_path(country_code, stage)
-    if not os.path.exists(path):
+    result = _load_ckpt_unified(_ckpt_key(country_code), stage)
+    if result is None:
         return None
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            payload = json.load(f)
-        articles = _articles_from_json(payload.get("articles", []))
-        extra = payload.get("extra", {})
-        saved_at = payload.get("saved_at", "?")
-        print(f"  [checkpoint] {stage}: loaded {len(articles)} articles (saved {saved_at})")
-        return articles, extra
-    except Exception as exc:
-        print(_err(f"  [checkpoint] load failed {path}: {exc}"))
-        return None
+    articles, extra = result
+    saved_at = extra.get("_saved_at", "?")
+    print(f"  [checkpoint] {stage}: loaded {len(articles)} articles (saved {saved_at})")
+    return articles, extra
 
 
 def _find_latest_ckpt(country_code: str) -> str | None:
-    """Find the latest completed checkpoint stage for a country."""
-    for stage in reversed(_COUNTRY_STAGES):
-        if os.path.exists(_ckpt_path(country_code, stage)):
-            return stage
-    return None
+    return _find_latest_ckpt_unified(_ckpt_key(country_code), _COUNTRY_STAGES)
 
 
 def _load_articles_json(json_path: str) -> list[NewsArticle]:
     """Load articles from a JSON sidecar file."""
     with open(json_path, "r", encoding="utf-8") as f:
         return _articles_from_json(json.load(f))
+
+
+# (kept for backward compat; serialization now in news_monitor.checkpoint)
 
 
 # -- section grouping for batch Grok -------------------------------------------
@@ -546,6 +487,7 @@ async def _run_country(
     overseas_proxy: str,
     sources_cfg: dict,
     resume: bool = False,
+    incremental: bool = False,
 ) -> None:
     """Run the full pipeline for a single country/topic with checkpoint support."""
 
@@ -615,6 +557,16 @@ async def _run_country(
             print(f"\033[92mResuming {country_code} from checkpoint: {resume_stage}\033[0m")
         else:
             print(f"No checkpoint for {country_code}, starting fresh.")
+
+    # P1-6: Incremental mode -- adjust from_date based on last checkpoint time
+    if incremental and resume_stage:
+        loaded = _load_ckpt(country_code, resume_stage)
+        if loaded:
+            _, inc_extra = loaded
+            last_saved = inc_extra.get("_saved_at", "")
+            if last_saved:
+                from_date = last_saved[:10]  # YYYY-MM-DD
+                print(f"Incremental mode: fetching from {from_date}")
 
     source_names = sorted(enabled_sources)
     print(f"Topic     : {topic['name']}")
@@ -769,6 +721,9 @@ async def _run_country(
         raw_total = len(all_arts)
         print(f"\n{'=' * 72}")
         print(f"Raw totals: {' | '.join(f'{k}: {v}' for k, v in source_counts.items())} | Total: {raw_total}")
+
+        # P0-2: Early domain filter -- before dedup to avoid wasting translation tokens
+        all_arts = _filter_blocked(all_arts)
 
         unique = _dedup_merge(all_arts)
         print(f"After dedup: {len(unique)}  (removed {raw_total - len(unique)} duplicates)")
@@ -937,8 +892,9 @@ async def main(topic_filters: list[str]) -> None:
     overseas_proxy = config.get("proxy", {}).get("overseas_proxy", "")
     sources_cfg = config.get("sources", {})
 
-    # Parse --resume flag
+    # Parse flags
     resume = "--resume" in topic_filters
+    incremental = "--incremental" in topic_filters
     positional = [a for a in topic_filters if not a.startswith("--")]
 
     all_topics = load_topics_from_dir("topics")
@@ -965,7 +921,7 @@ async def main(topic_filters: list[str]) -> None:
             print(f"## Country {idx}/{total}: {name}")
             print(f"{'#' * 72}\n")
 
-        await _run_country(topic, config, overseas_proxy, sources_cfg, resume=resume)
+        await _run_country(topic, config, overseas_proxy, sources_cfg, resume=resume, incremental=incremental)
 
         if idx < total:
             print(f"\n--- Finished {name}, moving to next country ---\n")
