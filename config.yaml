@@ -1,0 +1,126 @@
+schedule:
+  interval_minutes: 60
+  startup_run: true
+  timezone: "Asia/Shanghai"
+
+proxy:
+  overseas_proxy: "${LLM_PROXY}"
+
+sources:
+  brave_search:
+    enabled: true
+    priority: 1
+    api_key: "${BRAVEAPI}"
+  newsapi_ai:
+    enabled: true
+    priority: 2
+    api_key: "${NEWSAPI_AI_KEY}"
+  google_cse:
+    enabled: false
+    api_key: "${GOOGLE_CSE_API_KEY}"
+    cx: "${GOOGLE_CSE_CX}"
+  perplexity:
+    enabled: false
+    api_key: "${PERPLEXITY_API_KEY}"
+    model: "sonar"
+  newsdata_io:
+    enabled: false
+    api_key: "${NEWSDATA_API_KEY}"
+    max_results_per_query: 10
+  serpapi_google:
+    enabled: false
+    api_key: "${SERPAPI_KEY}"
+  worldnews:
+    enabled: false
+    api_key: "${WORLDNEWS_API_KEY}"
+    max_results_per_query: 50
+  tavily_search:
+    enabled: true
+    priority: 3
+    api_key: "${TAVILYAPI}"
+  gemini_search:
+    enabled: true
+    priority: 4
+    api_key: "${GEMINI_API_KEY}"
+  grok_web_search:
+    enabled: true
+    priority: 5
+    api_key: "${GROK_API_KEY}"
+    model: "grok-4-1-fast-non-reasoning"
+  grok_x_search:
+    enabled: true
+    priority: 6
+    api_key: "${GROK_API_KEY}"
+    model: "grok-4-1-fast-non-reasoning"
+
+topics_dir: topics
+
+translation:
+  target_language: "zh-CN"
+  provider: "qwen"
+  fallback_chain:
+    - "deepseek"
+    - "doubao"
+    - "grok"
+    - "glm"
+  batch_size: 0
+  skip_if_language: "zh"
+
+filter:
+  enabled: true
+  provider: "qwen"
+  fallback_chain:
+    - "deepseek"
+    - "doubao"
+    - "grok"
+    - "kimi"
+  batch_size: 0
+
+database:
+  enabled: false
+  dsn: "${DATABASE_URL}"
+  pool_min_size: 1
+  pool_max_size: 5
+  auto_migrate: true
+
+sqlite:
+  db_path: "data/news.db"
+
+dedup:
+  ttl_days: 30
+  similarity_threshold: 0.85
+
+ner:
+  enabled: true
+  provider: "deepseek"
+  fallback_provider: "kimi"
+  batch_size: 3
+
+embeddings:
+  enabled: true
+  provider: "deepseek"
+  model: "deepseek-embedding"
+  dimensions: 1024
+  batch_size: 20
+
+output:
+  pdf_enabled: true
+  pdf_dir: output/reports
+
+push:
+  batch_size: 10
+  channels:
+    - type: "feishu"
+      enabled: true
+      webhook_url: "${FEISHU_WEBHOOK_URL}"
+      secret: "${FEISHU_WEBHOOK_SECRET}"
+      template: "card"
+    - type: "dingtalk"
+      enabled: false
+      webhook_url: "${DINGTALK_WEBHOOK_URL}"
+      secret: "${DINGTALK_WEBHOOK_SECRET}"
+      template: "feedCard"
+    - type: "wecom"
+      enabled: false
+      webhook_url: "${WECOM_WEBHOOK_URL}"
+      template: "news"
