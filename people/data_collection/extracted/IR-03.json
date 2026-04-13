@@ -1,0 +1,62 @@
+[
+  {
+    "fact_id": "IR-03-F01",
+    "content": "“九二共识”一词由国民党籍官员苏起于2000年提出，用以概括1992年海基会与海协会在香港会谈及后续函电往来中达成的默契。国民党将其核心主张诠释为“一个中国，各自表述”，即双方均坚持一个中国原则，但对涵义认知不同，可由口头声明方式各自表达。",
+    "grade": "A",
+    "source_url": "https://udn.com/news/story/124802/9427810",
+    "source_name": "联合新闻网/维基百科",
+    "date_of_event": "2000-04-01",
+    "raw_quote": "「九二共識」源於一九九二年兩岸代表在香港的會談……雙方建立「一個中國、各自表述」的默契。",
+    "v6_module": "IR学术"
+  },
+  {
+    "fact_id": "IR-03-F02",
+    "content": "日本政治学者小笠原欣幸分析指出，国民党在两岸政策表述上存在内外差异：对台湾内部宣称“一中各表”，但在面对中国大陆时则采用“各表一中”。他认为现今国民党（以郑丽文为代表）对九二共识的诠释已向“各表一中”偏移。",
+    "grade": "B",
+    "source_url": "https://news.ltn.com.tw/news/politics/breakingnews/5333703",
+    "source_name": "自由时报",
+    "date_of_event": "2026-02-05",
+    "raw_quote": "國民黨對台灣內部宣稱「九二共識就是一中各表」，但在面對中國的發言中，卻採用「各表一中」的說法。",
+    "v6_module": "IR学术"
+  },
+  {
+    "fact_id": "IR-03-F03",
+    "content": "国民党内部提出“宪法九二”（Constitutional 92 Consensus）框架，旨在将两岸政策与现行的《中华民国宪法》挂钩。该框架认为两岸关系应在宪法架构下运行，将宪法修正视为对现状的重大改变，以此作为维持台海稳定的政治基础。",
+    "grade": "B",
+    "source_url": "https://jamestown.org/inside-taiwans-opposition-how-the-kmts-future-could-shape-cross-strait-stability/",
+    "source_name": "Jamestown Foundation",
+    "date_of_event": "2025-07-11",
+    "raw_quote": "Grounded in the so-called “Constitutional 92 Consensus” framework (憲法九二), which ties cross-Strait policy to the existing ROC Constitution.",
+    "v6_module": "IR学术"
+  },
+  {
+    "fact_id": "IR-03-F04",
+    "content": "2026年4月，国民党主席郑丽文访问北京并与习近平会面。郑丽文重申国民党坚持“九二共识”并反对“台独”。在相关电文中，其表述为“各自以口头方式表达坚持一个中国原则”，这一说法被解读为试图在“一中各表”与“各表一中”之间寻求模糊空间或向后者靠拢。",
+    "grade": "B",
+    "source_url": "https://udn.com/news/story/7339/9171706",
+    "source_name": "联合新闻网/BBC",
+    "date_of_event": "2026-04-10",
+    "raw_quote": "鄭麗文回覆習近平賀電稱「海峽兩岸於一九九二年達成各自以口頭方式表達堅持一個中國原則」。",
+    "v6_module": "IR学术"
+  },
+  {
+    "fact_id": "IR-03-F05",
+    "content": "在马英九执政时期（2008-2016），国民党的两岸政策光谱定位在“一中各表”的制度化模糊。通过坚持“九二共识”作为互动基础，两岸实现了包括“两岸领导人会面”在内的多项制度化交流，但此模糊空间在2019年后受到北京方面重新定义“九二共识”的挑战。",
+    "grade": "B",
+    "source_url": "https://talk.ltn.com.tw/article/breakingnews/5394879",
+    "source_name": "自由评论网",
+    "date_of_event": "2026-04-07",
+    "raw_quote": "在馬英九執政期間，這種模糊被制度化，雙方在各自表述的前提下維持交流。",
+    "v6_module": "IR学术"
+  },
+  {
+    "fact_id": "IR-03-F06",
+    "content": "战略与国际研究中心（CSIS）分析认为，国民党坚持“九二共识”具有特定的政治功能：一方面是为了安抚其党内传统的外省籍选民基础，另一方面是为了维持与中国大陆有紧密经贸往来的台商群体的支持。",
+    "grade": "B",
+    "source_url": "https://www.csis.org/analysis/collapse-one-china",
+    "source_name": "CSIS",
+    "date_of_event": "2026-03-03",
+    "raw_quote": "To appease its shrinking political base of waishengren... and its donor base of taishang... the KMT continues to cling to the 1992 Consensus.",
+    "v6_module": "IR学术"
+  }
+]

@@ -1,0 +1,102 @@
+[
+  {
+    "fact_id": "T1-21-F01",
+    "content": "國民黨基於任優先原則，被認為會提名現任台北市長蔣萬安尋求2026年連任。",
+    "grade": "C",
+    "source_url": "https://zh.wikipedia.org/zh-hant/2026%E5%B9%B4%E4%B8%AD%E8%8F%AF%E6%B0%91%E5%9C%8B%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7%E5%8F%8A%E7%B8%A3%E5%B8%82%E9%95%B7%E9%81%B8%E8%88%89",
+    "source_name": "維基百科",
+    "date_of_event": "",
+    "raw_quote": "國民黨方面，基於任優先原則，故被認為會提名時任臺北市市長蔣萬安尋求連任。",
+    "v6_module": "B模块十五 15.1"
+  },
+  {
+    "fact_id": "T1-21-F02",
+    "content": "台北市長蔣萬安在大罷免一役中保住台北市五席國民黨立委，藍營內部認為其外溢效果明顯，高人氣有助2026連任。",
+    "grade": "B",
+    "source_url": "https://www.businesstoday.com.tw/article/category/183027/post/202509150036/",
+    "source_name": "今周刊",
+    "date_of_event": "",
+    "raw_quote": "蔣萬安日前在大罷免一役，保住台北市五席國民黨立委，藍營內部認為，蔣萬安帶動的外溢效果甚至比盧秀燕更明顯，高人氣被認為有助於2026連任。",
+    "v6_module": "B模块十五 15.1"
+  },
+  {
+    "fact_id": "T1-21-F03",
+    "content": "吳怡農親赴民進黨中央遞交2026台北市長參選意願書，公開表示蔣萬安就是對手。",
+    "grade": "B",
+    "source_url": "https://www.cw.com.tw/article/5138758",
+    "source_name": "天下雜誌",
+    "date_of_event": "2025-10-31",
+    "raw_quote": "吳怡農親赴民進黨中央遞交參選意願書，公開表示「蔣萬安就是對手」，但他希望聚焦市政，反問市民「這幾年生活環境有變好嗎？」",
+    "v6_module": "B模块十五 15.1"
+  },
+  {
+    "fact_id": "T1-21-F04",
+    "content": "政治評論員黃暐瀚分析，民進黨2026台北市長人選中最有可能派出王世堅或吳怡農對戰蔣萬安。",
+    "grade": "B",
+    "source_url": "https://www.nownews.com/news/6745828",
+    "source_name": "NOWnews今日新聞",
+    "date_of_event": "2025-10-22",
+    "raw_quote": "目前民進黨6位備受看好的人選中，最有可能派出王世堅或是吳怡農。",
+    "v6_module": "B模块十五 15.1"
+  },
+  {
+    "fact_id": "T1-21-F05",
+    "content": "近期傳民進黨立委沈伯洋呼聲高，將可能參選2026台北市長對戰蔣萬安。",
+    "grade": "B",
+    "source_url": "https://udn.com/news/story/124652/9121921",
+    "source_name": "聯合新聞網",
+    "date_of_event": "",
+    "raw_quote": "2026民進黨派誰出戰北市長蔣萬安，至今人選未定，近期傳立委沈伯洋呼聲高。",
+    "v6_module": "B模块十五 15.1"
+  },
+  {
+    "fact_id": "T1-21-F06",
+    "content": "資深媒體人黃暐瀚認為，若王世堅無意願參選，吳怡農民調不錯，可能參選2026台北市長對戰蔣萬安。",
+    "grade": "B",
+    "source_url": "https://www.chinatimes.com/realtimenews/20251102000789-260407",
+    "source_name": "中時新聞網",
+    "date_of_event": "",
+    "raw_quote": "壯闊台灣聯盟創辦人吳怡農已遞交爭取台北市長提名參選意願表，若屆時綠委王世堅沒意願參選，而吳的民調又不錯，可能就會是吳出來選。",
+    "v6_module": "B模块十五 15.1"
+  },
+  {
+    "fact_id": "T1-21-F07",
+    "content": "最新網路投票顯示，若行政院副院長鄭麗君參選2026台北市長，將對決現任市長蔣萬安。",
+    "grade": "B",
+    "source_url": "https://news.tvbs.com.tw/politics/3158537",
+    "source_name": "TVBS新聞網",
+    "date_of_event": "",
+    "raw_quote": "2026台北市長之戰，國民黨現任市長蔣萬安尋求連任，民進黨人選則尚未明朗，行政院副院長鄭麗君是否參選，備受外界關注。",
+    "v6_module": "B模块十五 15.1"
+  },
+  {
+    "fact_id": "T1-21-F08",
+    "content": "國民黨台北市議員張斯綱點名某人對2026台北市長蔣萬安威脅度最高，民進黨潛在人選包括林右昌、吳怡農、王世堅、吳思瑤及苗博雅。",
+    "grade": "B",
+    "source_url": "https://tw.news.yahoo.com/%E6%B0%91%E9%80%B2%E9%BB%A82026%E5%8F%B0%E5%8C%97%E5%B8%82%E9%95%B7%E6%B4%BE%E8%AA%B0%E6%9C%80%E6%9C%89%E5%8B%9D%E7%AE%97-%E5%BC%B5%E6%96%AF%E7%B6%B1%E9%BB%9E%E5%90%8D-%E4%BB%96-%E5%B0%8D%E8%94%A3%E8%90%AC%E5%AE%89%E5%A8%81%E8%84%85%E5%BA%A6%E6%9C%80%E9%AB%98-141000028.html",
+    "source_name": "Yahoo新聞",
+    "date_of_event": "",
+    "raw_quote": "民進黨選對會則盤點潛在人選，包括前秘書長林右昌被視為黑馬，壯闊台灣聯盟創辦人吳怡農表態有意參選，而立委王世堅、吳思瑤及社民黨議員苗博雅也都被點名。",
+    "v6_module": "B模块十五 15.1"
+  },
+  {
+    "fact_id": "T1-21-F09",
+    "content": "台北市研考會2026年4月公布民調，蔣萬安整體施政滿意度達69.1%，較前次上升4.4個百分點。",
+    "grade": "A",
+    "source_url": "https://udn.com/news/story/124652/9424254",
+    "source_name": "聯合新聞網",
+    "date_of_event": "2026-04-06",
+    "raw_quote": "北市研考會今天公布最新民調，市長蔣萬安整體施政滿意度達69.1%，較前次調查上升4.4個百分點。",
+    "v6_module": "B模块十五 15.1"
+  },
+  {
+    "fact_id": "T1-21-F10",
+    "content": "TVBS民調顯示，蔣萬安滿意度逾60%，大幅領先王世堅及鄭麗君，支持連任2026台北市長。",
+    "grade": "B",
+    "source_url": "https://www.storm.mg/article/11099275",
+    "source_name": "風傳媒",
+    "date_of_event": "2026-01-29",
+    "raw_quote": "蔣萬安無論是對上王世堅或鄭麗君，皆以逾60%的支持度大幅領先。",
+    "v6_module": "B模块十五 15.1"
+  }
+]

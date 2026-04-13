@@ -1,0 +1,62 @@
+[
+  {
+    "fact_id": "IR-02-F01",
+    "content": "美国对台安全政策工具在《国防授权法案》（NDAA）框架下呈现制度化演变，从早期的军售与训练扩展至后勤储备、信息安全、无人机联合开发及演训邀请等多个层面，旨在通过立法工具为未来行动预留制度空间。",
+    "grade": "B",
+    "source_url": "https://vocus.cc/article/68f0d91bfd897800019c372b",
+    "source_name": "Vocus",
+    "date_of_event": "2025-10-16",
+    "raw_quote": "早期的法案多著重於軍售與訓練，而近年的版本已經擴展至後勤儲備、資訊安全、無人機合作及演訓邀請等多層面議題。",
+    "v6_module": "IR学术"
+  },
+  {
+    "fact_id": "IR-02-F02",
+    "content": "美国2026财年NDAA确立了“台湾安全合作倡议”作为核心政策工具，授权最高10亿美元预算，范围涵盖医疗设备、补给、战斗伤亡照护能力，并要求启动美台无人系统及反无人系统联合开发与生产计划。",
+    "grade": "A",
+    "source_url": "https://news.ltn.com.tw/news/world/paper/1736583",
+    "source_name": "自由时报",
+    "date_of_event": "2025-12-18",
+    "raw_quote": "授權最高十億美元推動「台灣安全合作倡議」，範圍涵蓋醫療設備、補給與戰鬥傷亡照護能力。啟動美台無人系統及反無人系統聯合計畫。",
+    "v6_module": "IR学术"
+  },
+  {
+    "fact_id": "IR-02-F03",
+    "content": "美台安全政策工具包含海事执法整合，NDAA 2026要求制定2026至2030财年的海巡整合训练计划，派遣美国海岸防卫队（USCG）行动训练团队赴台，以提升台湾的海事安全、执法与吓阻能力。",
+    "grade": "A",
+    "source_url": "https://www.cna.com.tw/news/aipl/202512080030.aspx",
+    "source_name": "中央社 CNA",
+    "date_of_event": "2025-12-08",
+    "raw_quote": "法案也要求增加美台海巡整合訓練機會的計畫。內容應包含派遣美國海岸防衛隊行動訓練團隊赴台。",
+    "v6_module": "IR学术"
+  },
+  {
+    "fact_id": "IR-02-F04",
+    "content": "美国利用金融与法律工具强化台湾防卫，包括通过《强化台湾韧性法》（TERA）授权“外国军事融资”（FMF）贷款或赠款供台湾采购美制武器，并在NDAA中纳入《不歧视台湾法案》支持台湾加入国际货币基金组织（IMF）。",
+    "grade": "A",
+    "source_url": "https://www.congress.gov/crs-product/IF12481",
+    "source_name": "Congress.gov / NOWnews今日新聞",
+    "date_of_event": "2025-12-18",
+    "raw_quote": "TERA also authorized the provision to Taiwan of Foreign Military Financing (FMF). 法案並納入「不歧視台灣法案」，明確支持台灣加入國際貨幣基金（IMF）。",
+    "v6_module": "IR学术"
+  },
+  {
+    "fact_id": "IR-02-F05",
+    "content": "美国对台军售工具转向“非对称防御”蓝图，具体手段包括提供海马斯（HIMARS）远程精打击系统、反装甲型无人机导弹系统、以及“台湾战术网络”（TTN）暨部队觉知应用套件（TAK），以应对台海局势。",
+    "grade": "B",
+    "source_url": "https://www.bbc.com/zhongwen/articles/c30j26p3l9no/trad",
+    "source_name": "BBC News 中文",
+    "date_of_event": "2025-12-17",
+    "raw_quote": "包括「海馬斯遠程精準打擊系統續購」、「反裝甲型無人機飛彈系統」、「台灣戰術網絡（TTN）暨部隊覺知應用套件（TAK）」。",
+    "v6_module": "IR学术"
+  },
+  {
+    "fact_id": "IR-02-F06",
+    "content": "美国通过立法手段建立“台湾安全援助路线图”及评估“区域应变储备库”的可能性，作为长期安全政策工具，旨在规划未来数年台湾军方的防御需求并确保战时补给。",
+    "grade": "A",
+    "source_url": "https://www.nownews.com/news/6766148",
+    "source_name": "NOWnews今日新聞",
+    "date_of_event": "2025-12-18",
+    "raw_quote": "要求國防部長辦公室制定「台灣安全援助路線圖」...及評估建立「區域應變儲備庫」的可能性。",
+    "v6_module": "IR学术"
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "fact_id": "IR-01-F01",
+    "content": "马绍章提出美中台战略三角逻辑存在“罗曼蒂克型”与“结婚型”两种可能。该框架强调三方不可能同时友好，且台湾无法在逻辑上同时与美国和中国为敌。",
+    "grade": "B",
+    "source_url": "https://bookzone.cwgv.com.tw/article/17288",
+    "source_name": "天下文化",
+    "date_of_event": "2025-07-07",
+    "raw_quote": "美中台戰略三角邏輯上就只有兩種可能，亦即「羅曼蒂克型」與「結婚型」，三方不可能同時友好，台灣也不可能同時與美、中為敵。",
+    "v6_module": "IR学术"
+  },
+  {
+    "fact_id": "IR-01-F02",
+    "content": "美国对台长期奉行“战略模糊”政策，其核心学术逻辑为“双重吓阻”（dual deterrence）：即在威慑北京不敢武力犯台的同时，警告台北不得采取脱离美国掌控的外交主张。",
+    "grade": "A",
+    "source_url": "https://zh.wikipedia.org/zh-hans/%E6%88%B0%E7%95%A5%E6%A8%A1%E7%B3%8A",
+    "source_name": "维基百科/CFR",
+    "date_of_event": "2025-12-07",
+    "raw_quote": "該政策長年以來被華盛頓政界公認達到「雙重嚇阻」（dual deterrence）的效果：亦即使北京不敢輕舉妄動的同時，也警告台北不得脫離美國所能接受的外交主張。",
+    "v6_module": "IR学术"
+  },
+  {
+    "fact_id": "IR-01-F03",
+    "content": "学术界提出“三体问题”（Three-Body Problem）框架分析美中台关系。该框架采用混沌动力学视角，强调关系的复杂性而非线性因果，并将台湾视为主动参与者而非被动客体。",
+    "grade": "B",
+    "source_url": "https://www.stairjournal.com/oped/2025/10/11/chaotic-dynamics-the-three-body-problem-of-uschinataiwan-relations",
+    "source_name": "St. Antony's International Review",
+    "date_of_event": "2025-11-25",
+    "raw_quote": "This framework emphasizes complexity over linear causality, casting Taiwan as an active player rather than a passive object.",
+    "v6_module": "IR学术"
+  },
+  {
+    "fact_id": "IR-01-F04",
+    "content": "Sacks提出“联动升级”（Linked Escalation）框架，主张美国应通过增加对台安全援助、调整区域防御态势及应对灰色地带活动，将反制措施与整体战略相结合。",
+    "grade": "B",
+    "source_url": "https://www.brookings.edu/articles/adapting-us-taiwan-policy-for-a-new-strategic-reality/",
+    "source_name": "Brookings Institution",
+    "date_of_event": "2026-03-20",
+    "raw_quote": "His “linked escalation” framework treats well-designed responses... increasing security assistance for Taiwan, making shifts to the U.S. regional defense posture.",
+    "v6_module": "IR学术"
+  },
+  {
+    "fact_id": "IR-01-F05",
+    "content": "研究者利用“权力转移理论”（Power Transition Theory）分析美中台三角，指出台湾处于中国崛起引发的霸权竞争与美国威慑战略调整的交汇点，权力等级通过话语和行为信号构建。",
+    "grade": "B",
+    "source_url": "https://www.assajournal.com/index.php/36/article/view/1438",
+    "source_name": "ASSA Journal",
+    "date_of_event": "2026-02-21",
+    "raw_quote": "The inquiry situates Taiwan at the intersection of competing hegemonic aspirations and regional realignments driven by China’s ascent and the United States’ recalibrated deterrence strategies.",
+    "v6_module": "IR学术"
+  },
+  {
+    "fact_id": "IR-01-F06",
+    "content": "台湾大学教授杨永明提出台湾安全研究的三大战略方向框架，即“经营美日、交往中共、置身亚太”，旨在多维度的地缘战略中寻求平衡。",
+    "grade": "B",
+    "source_url": "https://zh.wikipedia.org/zh-hant/%E5%8F%B0%E7%81%A3%E5%9C%B0%E7%B7%A3%E6%88%B0%E7%95%A5",
+    "source_name": "维基百科/台湾大学",
+    "date_of_event": "2025-12-06",
+    "raw_quote": "1997年臺灣大學政治系楊永明教授架設的「臺灣安全網站」對於台灣的安全研究策略定為「經營美日、交往中共、置身亞太」三大方向。",
+    "v6_module": "IR学术"
+  },
+  {
+    "fact_id": "IR-01-F07",
+    "content": "李文志教授提出台湾应在强权平衡间扮演“中介缓冲共同体”，对美诉求民主价值与牵制功能，对中寻求双边和解，并结合日、澳、韩建立亚太多边安全体系。",
+    "grade": "B",
+    "source_url": "https://zh.wikipedia.org/zh-hant/%E5%8F%B0%E7%81%A3%E5%9C%B0%E7%B7%A3%E6%88%B0%E7%95%A5",
+    "source_name": "维基百科",
+    "date_of_event": "2025-12-06",
+    "raw_quote": "2001年李文志教授提出台灣對美國可訴求牽制中共...對中共進行雙邊和解...與澳洲、紐西蘭、南韓等國家建立亞太多邊安全體系。",
+    "v6_module": "IR学术"
+  },
+  {
+    "fact_id": "IR-01-F08",
+    "content": "布鲁金斯学会提出“分层方法”（Layered Approach）框架，建议台湾在深化美台合作的同时，扩展与多方的安全、外交、经济和技术伙伴关系，以管理地缘风险。",
+    "grade": "B",
+    "source_url": "https://www.brookings.edu/articles/indo-pacific-perspectives-on-the-prospect-of-a-us-china-g2/",
+    "source_name": "Brookings Institution",
+    "date_of_event": "2026-03-13",
+    "raw_quote": "A layered approach—deepening cooperation with the United States while expanding partnerships across security, diplomatic, economic, and technological domains.",
+    "v6_module": "IR学术"
+  }
+]

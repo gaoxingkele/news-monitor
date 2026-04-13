@@ -1,0 +1,72 @@
+[
+  {
+    "fact_id": "T1-07-F01",
+    "content": "章孝严于2005年3月，经台北市民政局、内政部、法务部等部门法律程序，将身份证父亲栏改為蒋经国，从章姓改為蒋姓，但未与蒋家人进行DNA鉴定。",
+    "grade": "C",
+    "source_url": "https://zh.wikipedia.org/wiki/%E8%94%A3%E5%AD%9D%E5%9A%B4",
+    "source_name": "维基百科",
+    "date_of_event": "2005-03",
+    "raw_quote": "2005年3月，依蔣經國親信王昇之書面證詞，經由台北市民政局、內政部、法務部等部門的法律程序，將身分證父親欄改為蔣經國，從章姓改為蔣姓。但因沒有跟蔣家人驗DNA，令民眾存疑。",
+    "v6_module": "B模块一 1.2/1.5"
+  },
+  {
+    "fact_id": "T1-07-F02",
+    "content": "章孝严及其双胞胎弟弟章孝慈于1942年3月1日出生于广西桂林，其母亲为章亚若，被认为是非婚生子。",
+    "grade": "C",
+    "source_url": "https://www.thenewslens.com/article/135864",
+    "source_name": "TNL The News Lens 關鍵評論網",
+    "date_of_event": "1942-03-01",
+    "raw_quote": "1942年3月1日出生的蔣孝嚴原名章孝嚴，其雙胞胎弟弟章孝慈於1996年過世。",
+    "v6_module": "B模块一 1.2/1.5"
+  },
+  {
+    "fact_id": "T1-07-F03",
+    "content": "章孝慈于1996年2月24日去世。",
+    "grade": "C",
+    "source_url": "https://zh.wikipedia.org/zh-hant/%E7%AB%A0%E5%AD%9D%E6%85%88",
+    "source_name": "维基百科",
+    "date_of_event": "1996-02-24",
+    "raw_quote": "章孝慈（1942年3月1日—1996年2月24日），臺灣法律學者，生於廣西桂林。",
+    "v6_module": "B模块一 1.2/1.5"
+  },
+  {
+    "fact_id": "T1-07-F04",
+    "content": "章亚若于1942年8月14日下午参加邱昌渭家晚宴，深夜回来时上吐下泻，8月15日送至桂林医院，当日死亡，终年29岁。",
+    "grade": "C",
+    "source_url": "https://zh.wikipedia.org/wiki/%E7%AB%A0%E4%BA%9E%E8%8B%A5",
+    "source_name": "维基百科",
+    "date_of_event": "1942-08-15",
+    "raw_quote": "1942年8月14日下午，章亞若参加邱昌渭家晚宴，深夜回来时上吐下泻，8月15日送至桂林医院。當日死亡，终年29岁。",
+    "v6_module": "B模块一 1.2/1.5"
+  },
+  {
+    "fact_id": "T1-07-F05",
+    "content": "蒋经国令副官王制刚将章亚若葬于桂林东郊七星区白面山凤凰岭，王制刚、桂昌德随后护送二子到江西万安，请章母抚养。",
+    "grade": "C",
+    "source_url": "https://zh.wikipedia.org/wiki/%E7%AB%A0%E4%BA%9E%E8%8B%A5",
+    "source_name": "维基百科",
+    "date_of_event": "1942-08",
+    "raw_quote": "蔣經國令副官王制剛葬章於桂林東郊七星區白面山鳳凰岭，王制剛、桂昌德隨後護送二子到江西萬安，請章母撫養。",
+    "v6_module": "B模块一 1.2/1.5"
+  },
+  {
+    "fact_id": "T1-07-F06",
+    "content": "2002年7月，章孝严到江西南昌，找到章浩若两个儿子章修纯、章修维，写下声明书，证明章浩若是他们的父亲，非章孝严生父，章亚若是他们的三姑。",
+    "grade": "C",
+    "source_url": "https://zh.wikipedia.org/zh-tw/%E8%94%A3%E5%AD%9D%E5%9A%B4",
+    "source_name": "维基百科",
+    "date_of_event": "2002-07",
+    "raw_quote": "2002年7月，蔣孝嚴到江西南昌，找到章浩若兩個兒子章修純、章修維，寫下聲明書，證明章浩若是他們的父親，非章孝嚴生父，章亞若是他們的三姑，也是章孝嚴的母親。",
+    "v6_module": "B模块一 1.2/1.5"
+  },
+  {
+    "fact_id": "T1-07-F07",
+    "content": "蔣孝嚴于2005年經台北市政府民政局、内政部、法务部等部門法律程序改姓蔣。",
+    "grade": "C",
+    "source_url": "https://zh.wikipedia.org/wiki/%E8%94%A3%E8%90%AC%E5%AE%89",
+    "source_name": "维基百科",
+    "date_of_event": "2005-03",
+    "raw_quote": "直到2005年3月，章孝嚴經由臺北市政府民政局、內政部、法務部等部門的法律程序改姓「蔣」",
+    "v6_module": "B模块一 1.2/1.5"
+  }
+]

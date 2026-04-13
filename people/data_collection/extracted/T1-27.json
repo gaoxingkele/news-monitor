@@ -1,0 +1,32 @@
+[
+  {
+    "fact_id": "T1-27-F01",
+    "content": "黄复兴党部原为国民党内由退除役官兵及其眷属组成的特殊组织，成立于1956年7月1日，代号“黄复兴”，旨在团结荣民支持国民党。该组织已于近年解散。",
+    "grade": "B",
+    "source_url": "https://www.taipeitimes.com/News/feat/archives/2025/10/25/2003846062",
+    "source_name": "Taipei Times",
+    "date_of_event": "",
+    "raw_quote": "A major institutional factor that technically no longer exists is the recently disbanded Huang Fuhsing (黃復興) military veteran’s group.",
+    "v6_module": "B模块八 8.2"
+  },
+  {
+    "fact_id": "T1-27-F02",
+    "content": "蒋万安因体检被判定患有椎间盘突出，依法仅服12天补充役。此役期安排曾多次在选举中被公开检视，并引发议员质询。",
+    "grade": "B",
+    "source_url": "https://news.tvbs.com.tw/politics/2870731",
+    "source_name": "TVBS新聞網",
+    "date_of_event": "2025-05-15",
+    "raw_quote": "蔣萬安過去體檢判定「腰椎間盤突出」不用當兵，但打籃球、健身都很厲害，為什麼可以只做12天的補充兵？",
+    "v6_module": "B模块八 8.2"
+  },
+  {
+    "fact_id": "T1-27-F03",
+    "content": "蒋万安回应关于其兵役问题时表示：“一切都是依法依规定”，并称每次选举都已对此进行过充分说明。",
+    "grade": "B",
+    "source_url": "https://udn.com/news/story/7315/8741281",
+    "source_name": "聯合新聞網",
+    "date_of_event": "2025-05-17",
+    "raw_quote": "蔣說，一切依法依規定，並無奈說...",
+    "v6_module": "B模块八 8.2"
+  }
+]

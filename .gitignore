@@ -1,8 +1,9 @@
 .env
 data/
 logs/
-output/
+/output/
 __pycache__/
+people/osint-political-profile-v7/
 *.pyc
 *.pyo
 .venv/

@@ -1,0 +1,28 @@
+{
+  "cec": {
+    "source": "",
+    "data": []
+  },
+  "sunshine_assets": {
+    "source": "sunshine.cy.gov.tw",
+    "data": [],
+    "error": "[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)"
+  },
+  "sunshine_donations": {
+    "source": "sunshine.cy.gov.tw/politicaldonate",
+    "data": [],
+    "error": "[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)"
+  },
+  "ly": {
+    "source": "lis.ly.gov.tw",
+    "data": [],
+    "error": "[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)",
+    "npl_error": "[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)"
+  },
+  "ccw": {
+    "source": "ccw.org.tw",
+    "data": [],
+    "accessible": false,
+    "page_size": 5751
+  }
+}

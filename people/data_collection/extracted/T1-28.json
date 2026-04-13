@@ -1,0 +1,62 @@
+[
+  {
+    "fact_id": "T1-28-F01",
+    "content": "蔣萬安出版個人著作《台北．萬安》，內容分享其高中之前未聽家人提過蔣家事、追劇迷弟因《洛城法網》成為美國執業律師、告白失利因忘記換氣、游泳比賽第一卻被取消資格等個人故事。",
+    "grade": "B",
+    "source_url": "https://www.thenewslens.com/article/172573",
+    "source_name": "TNL The News Lens 關鍵評論網",
+    "date_of_event": "",
+    "raw_quote": "蔣萬安《台北．萬安》：其實在高中之前，我從來沒聽家人提過任何蔣家的事。他是追劇迷弟，因為看《洛城法網》，變成美國執業律師。",
+    "v6_module": "B模块十 10.5"
+  },
+  {
+    "fact_id": "T1-28-F02",
+    "content": "蔣萬安出版書籍《萬安向前：永遠選擇走出舒適圈，走自己的路，做對的事》，由天下雜誌出版，包含其夥伴與家人觀察，提供其個性與政治抱負的多面向視角。",
+    "grade": "C",
+    "source_url": "https://www.eslite.com/product/1001124272682232779008",
+    "source_name": "eslite.com / cw.com.tw",
+    "date_of_event": "2022-08-19",
+    "raw_quote": "Wan-an: Always Choose to Step Out of Your Comfort Zone, Walk Your Own Path, Do the Right Thing) * 天下雜誌出版 (Commonwealth Publishing)",
+    "v6_module": "B模块十 10.5"
+  },
+  {
+    "fact_id": "T1-28-F03",
+    "content": "台北市長蔣萬安就職即將滿3年時，表示最滿意的3項政績為吸引輝達等頂尖企業進駐、台北大巨蛋啟用及捷運工程6線齊發。",
+    "grade": "B",
+    "source_url": "https://taronews.tw/2025/12/10/1119589/",
+    "source_name": "芋傳媒 TaroNews",
+    "date_of_event": "2025-12-10",
+    "raw_quote": "台北市長蔣萬安就職即將滿 3 年，談及自己最滿意的 3 項政績，他說，吸引輝達等頂尖企業進駐、台北大巨蛋啟用及捷運工程 6 線齊發",
+    "v6_module": "B模块十 10.5"
+  },
+  {
+    "fact_id": "T1-28-F04",
+    "content": "台北市政府在蔣萬安任內修正《台北市外送平台業者管理自治條例》，要求外送平台調整外送報酬前應與工會協商、設置休息時間提醒機制；在都市更新上推出「都更五箭」及新「都更三箭」。",
+    "grade": "C",
+    "source_url": "https://zh.wikipedia.org/zh-tw/%E8%94%A3%E8%90%AC%E5%AE%89%E5%B8%82%E5%BA%9C",
+    "source_name": "維基百科",
+    "date_of_event": "",
+    "raw_quote": "修正《台北市外送平台業者管理自治條例》，要求外送平台調整外送報酬前應與工會協商、設置休息時間提醒機制等。蔣萬安在台北都市更新上，2023年推出了「都更五箭」...2024年再推出了新「都更三箭」",
+    "v6_module": "B模块十 10.5"
+  },
+  {
+    "fact_id": "T1-28-F05",
+    "content": "台北市長蔣萬安於2026年4月9日赴台北市議會進行施政報告。",
+    "grade": "B",
+    "source_url": "https://tw.news.yahoo.com/%E8%94%A3%E8%90%AC%E5%AE%89%E5%B0%87%E6%96%BD%E6%94%BF%E5%A0%B1%E5%91%8A-%E5%8C%97%E5%B8%82%E8%AD%B0%E6%9C%83%E8%97%8D%E7%B6%A0%E7%99%BD%E5%90%84%E6%9C%89%E4%BD%9C%E7%82%BA-%E5%9C%96-124227851.html",
+    "source_name": "中央社 / Yahoo新聞",
+    "date_of_event": "2026-04-09",
+    "raw_quote": "蔣萬安將施政報告 北市議會藍綠白各有作為",
+    "v6_module": "B模块十 10.5"
+  },
+  {
+    "fact_id": "T1-28-F06",
+    "content": "台北市長蔣萬安近期推動生生喝鮮奶、學生營養午餐免費、育兒減工時試辦計畫等新政。",
+    "grade": "B",
+    "source_url": "https://udn.com/news/story/124652/9424254",
+    "source_name": "聯合新聞網",
+    "date_of_event": "",
+    "raw_quote": "蔣萬安近期推動生生喝鮮奶、學生營養午餐免費、育兒減工時試辦計畫等新政",
+    "v6_module": "B模块十 10.5"
+  }
+]

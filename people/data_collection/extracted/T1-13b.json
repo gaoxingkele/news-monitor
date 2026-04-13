@@ -1,0 +1,72 @@
+[
+  {
+    "fact_id": "T1-13b-F01",
+    "content": "美国参议院于2022年12月通过2023财年《国防授权法案》（NDAA），授权在2023年至2027年间向台湾提供总额100亿美元（每年最高20亿美元）的无偿军事援助，并计划从2023年秋季起派遣美国政府官员赴台湾政府单位合作交流。",
+    "grade": "B",
+    "source_url": "https://www.thenewslens.com/article/178240",
+    "source_name": "TNL The News Lens 关键评论网",
+    "date_of_event": "2022-12-15",
+    "raw_quote": "美國參議院15日通過2023年度國防授權法案，授權未來5年提供台灣100億美元無償軍援，明年秋季起派官員到台政府單位合作交流",
+    "v6_module": "B模块十四 14.2"
+  },
+  {
+    "fact_id": "T1-13b-F02",
+    "content": "美国国会两院就2026财年《国防授权法案》（NDAA）达成统一版本，授权拨付最高10亿美元用于推进台湾安全合作倡议，涵盖医疗设备、补给及战斗伤亡照护能力。然而，该版本删除了此前曾讨论的邀请台湾参与环太平洋军事演习（RIMPAC）的相关文字。",
+    "grade": "B",
+    "source_url": "https://udn.com/news/story/10930/9188663",
+    "source_name": "联合新闻网",
+    "date_of_event": "2025-12-07",
+    "raw_quote": "逾3000頁的內容中刪去了邀請台灣參與環太平洋軍事演習的文字。最高10億美元可供用於推進台灣安全合作倡議。",
+    "v6_module": "B模块十四 14.2"
+  },
+  {
+    "fact_id": "T1-13b-F03",
+    "content": "台湾外交部于2025年12月18日证实，美国政府已通知国会将向台湾出售总额约111.05亿美元的军事装备。该方案包含台湾战术网络（TTN）、M109A7自走炮、海马士远程精准打击系统续购、反装甲型无人机导弹系统等8项内容，为特朗普第二任期内宣布的第二批对台军售。",
+    "grade": "A",
+    "source_url": "https://www.mofa.gov.tw/News_Content.aspx?n=95&s=121337",
+    "source_name": "中华民国外交部",
+    "date_of_event": "2025-12-18",
+    "raw_quote": "將對台灣出售總額111億540萬美元的「台灣戰術網路（TTN）暨部隊覺知應用套件（TAK）」、陸軍「AH-1W型直升機零附件」等共8案。",
+    "v6_module": "B模块十四 14.2"
+  },
+  {
+    "fact_id": "T1-13b-F04",
+    "content": "台湾总统赖清德于2025年11月宣布一项总额400亿美元（约新台币1.3万亿元）的国防补充预算，计划于2026年至2033年间执行，旨在强化国家安全。目前该预算在野党控制的立法院中面临审议阻力，尚未获得通过。",
+    "grade": "B",
+    "source_url": "https://www.reuters.com/world/china/taiwan-says-us-has-initiated-111-billion-arms-sale-procedure-2025-12-18/",
+    "source_name": "Reuters / Taipei Times",
+    "date_of_event": "2025-11-01",
+    "raw_quote": "Taiwan President Lai Ching-te last month announced a $40 billion supplementary defence budget, to run from 2026 to 2033.",
+    "v6_module": "B模块十四 14.2"
+  },
+  {
+    "fact_id": "T1-13b-F05",
+    "content": "台湾国防部长顾立雄于2026年3月表示，一项价值约140亿美元的重大对台军售案已准备就绪，待美国总统特朗普批准。该方案包含先进的拦截导弹，台湾方面已收到美方的保证函，显示军售程序正按计划推进。",
+    "grade": "B",
+    "source_url": "https://www.reuters.com/world/china/taiwan-indicates-next-us-arms-sale-is-track-after-receiving-guarantee-letter-2026-03-26/",
+    "source_name": "Reuters",
+    "date_of_event": "2026-03-26",
+    "raw_quote": "A major U.S. arms package for Taiwan worth about $14 billion that includes advanced interceptor missiles is ready for U.S. President Donald Trump's approval",
+    "v6_module": "B模块十四 14.2"
+  },
+  {
+    "fact_id": "T1-13b-F06",
+    "content": "台湾国军设立“联合火力协调中心”，旨在加强台美联合幕僚作业与军事交流。国防部对此回应称，国军指挥所依据联合作战指挥机制律定编组，相关涉外军事交流均依年度计划执行，但具体细节涉及作战安全不便评论。",
+    "grade": "B",
+    "source_url": "https://udn.com/news/story/10930/9288161",
+    "source_name": "联合新闻网",
+    "date_of_event": "2026-01-26",
+    "raw_quote": "國軍設聯合火力協調中心 台美聯合幕僚作業...國軍涉外軍事交流合作，均依年度計畫執行，細節援例沒有說明。",
+    "v6_module": "B模块十四 14.2"
+  },
+  {
+    "fact_id": "T1-13b-F07",
+    "content": "美国《2026财年国防授权法案》（NDAA 2026）修订了涉华条款，实质性拓宽了“中国军事公司”的涵盖范围。新规将直接或间接由中国军事部门控制、关联或代理的境外运营实体纳入穿透式审查，旨在封堵企业通过境外注册或第三国架构规避美国合规审查的路径。",
+    "grade": "B",
+    "source_url": "https://www.lexology.com/library/detail.aspx?g=ef0d86d7-0dfe-4a94-a184-50fa1d58e208",
+    "source_name": "Lexology",
+    "date_of_event": "2025-12-20",
+    "raw_quote": "NDAA 2026通過修訂...實質性拓寬「中國軍事公司」的涵蓋範圍，將直接或間接由相關中國軍事部門控制、關聯或代理的境外運營實體包含在內。",
+    "v6_module": "B模块十四 14.2"
+  }
+]
