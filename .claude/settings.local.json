@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(PYTHONPATH=src python:*)",
+      "Bash(pip install:*)",
+      "Bash(start:*)",
+      "Bash(claude:*)",
+      "Bash(ls topics/ | sed 's/_monitor\\\\.md//' | sort)",
+      "Bash(ls output/reports/*.md 2>/dev/null && ls output/*.md 2>/dev/null)",
+      "Bash(pip list:*)",
+      "Bash(cd D:/BaiduSyncdisk/aicoding/news-monitor/topics && for f in *.md; do if grep -q 'skip_sources: \\\\[newsapi_ai\\\\]' \"$f\"; then sed -i 's/skip_sources: \\\\[newsapi_ai\\\\]/skip_sources: [newsdata_io, serpapi_google]/' \"$f\" && echo \"Updated: $f\"; fi; done)",
+      "WebSearch",
+      "WebFetch(domain:developers.google.com)",
+      "Bash(cd D:/BaiduSyncdisk/aicoding/news-monitor && python -c \"\nfrom dotenv import load_dotenv; load_dotenv\\(\\)\nimport os\nkey = os.environ.get\\('GOOGLE_CSE_API_KEY', ''\\)\ncx = os.environ.get\\('GOOGLE_CSE_CX', ''\\)\nprint\\(f'GOOGLE_CSE_API_KEY: set \\({len\\(key\\)} chars\\)' if key else 'GOOGLE_CSE_API_KEY: NOT SET'\\)\nprint\\(f'GOOGLE_CSE_CX: set \\({len\\(cx\\)} chars\\)' if cx else 'GOOGLE_CSE_CX: NOT SET'\\)\n\")",
+      "Bash(cd D:/BaiduSyncdisk/aicoding/news-monitor && python -c \"\nfrom dotenv import load_dotenv; load_dotenv\\(\\)\nimport os\nkey = os.environ.get\\('BRAVE_API_KEY', ''\\)\nprint\\(f'BRAVE_API_KEY: set \\({len\\(key\\)} chars\\)' if key else 'BRAVE_API_KEY: NOT SET'\\)\n\")",
+      "WebFetch(domain:api-dashboard.search.brave.com)",
+      "WebFetch(domain:brave.com)",
+      "Bash(taskkill /f /im python.exe 2>/dev/null; echo \"done\")",
+      "Bash(tasklist /fi \"imagename eq python.exe\" 2>/dev/null | head -10)",
+      "Bash(tasklist 2>/dev/null | grep -i python)",
+      "Bash(cd \"D:\\\\BaiduSyncdisk\\\\aicoding\\\\news-monitor\" && PYTHONUNBUFFERED=1 PYTHONIOENCODING=utf-8 python -u run_batch.py 2>&1)",
+      "Bash(grep -c \"python\" /proc/*/status 2>/dev/null; tasklist 2>/dev/null | grep python | wc -l)",
+      "Bash(wmic process:*)",
+      "Bash(taskkill //F //IM python.exe 2>/dev/null; sleep 2; tasklist | grep -i python)",
+      "WebFetch(domain:docs.x.ai)",
+      "WebFetch(domain:latenode.com)",
+      "WebFetch(domain:ai.google.dev)",
+      "Bash(cd \"D:/BaiduSyncdisk/aicoding/news-monitor\" && FETCH_FROM=2026-03-05 FETCH_TO=2026-03-12 python fetch_topic.py 巴拿马)",
+      "Bash(cd \"D:/BaiduSyncdisk/aicoding/news-monitor\" && FETCH_FROM=2026-03-05 FETCH_TO=2026-03-12 python fetch_topic.py 巴拿马 2>&1)",
+      "Bash(curl -s -X POST \"https://ark.cn-beijing.volces.com/api/v3/chat/completions\" \\\\\n  -H \"Content-Type: application/json\" \\\\\n  -H \"Authorization: Bearer b8732e0c-14ba-4c7f-aa7f-a7713fd8caf0\" \\\\\n  -d '{\"model\":\"ep-m-20260310232814-jx86v\",\"messages\":[{\"role\":\"user\",\"content\":\"hello\"}]}' 2>&1 | head -5)",
+      "Bash(FETCH_FROM=2026-03-06 FETCH_TO=2026-03-13 python fetch_topic.py 巴拿马 2>&1)",
+      "Bash(ls -t output/reports/*.md | head -1)",
+      "Bash(FETCH_FROM=2026-03-06 FETCH_TO=2026-03-13 python fetch_topic.py 多米尼加 2>&1)",
+      "Bash(ls topics/*dominic* topics/*do_* topics/*do.* 2>/dev/null || echo \"checking all topics...\" && ls topics/)",
+      "Bash(FETCH_FROM=2026-03-06 FETCH_TO=2026-03-13 FETCH_SOURCES=grok_web,grok_x MERGE_WITH=output/reports/20260314_010404_pa.json python fetch_topic.py 巴拿马 2>&1)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:docs.tavily.com)",
+      "Bash(cd \"D:\\\\BaiduSyncdisk\\\\aicoding\\\\news-monitor\" && FETCH_SOURCES=tavily FETCH_FROM=2026-03-06 FETCH_TO=2026-03-13 python fetch_topic.py 巴拿马 2>&1)"
+    ]
+  }
+}

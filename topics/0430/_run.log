@@ -1,0 +1,27 @@
+D:\aicoding\news-monitor\topics\0430\research_mitchell_v2.py:60: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  NOW = datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
+[1/3] 多源原生 API 取证…
+
+=== Q1_机构基本情况 : 5 个 query × 4 源 ===
+  完成: 15/20 成功 [brave=5/5, tavily=5/5, grok=0/5, gemini=5/5]
+
+=== Q2_涉台党政军合作 : 7 个 query × 4 源 ===
+  完成: 21/28 成功 [brave=7/7, tavily=7/7, grok=0/7, gemini=7/7]
+
+=== Q3_中国空军追踪器数据来源 : 6 个 query × 4 源 ===
+  完成: 18/24 成功 [brave=6/6, tavily=6/6, grok=0/6, gemini=6/6]
+  写入 D:\aicoding\news-monitor\topics\0430\raw_evidence_v2.json
+  写入 D:\aicoding\news-monitor\topics\0430\raw_evidence_v2.md (208794 字符)
+[2/3] Cloubic → gemini-3.1-pro-preview 多轮整合…
+  正在生成 [Q1] 第一章 · 机构基本情况…
+    [Q1] 完成 7369 字符
+  正在生成 [Q2] 第二章 · 与台湾地区党政军合作、联系、交流（重点：国安局 NSB / 军情局 MIB / INDSR）…
+    [Q2] 完成 6358 字符
+  正在生成 [Q3] 第三章 · 《中国空军追踪器》数据来源与方法论分析…
+    [Q3] 完成 8078 字符
+  正在生成 [Q4] 第四章 · 战略评估、风险识别与后续侦察方向…
+    [Q4] 完成 9795 字符
+[3/3] 写出 markdown 报告…
+  写入 D:\aicoding\news-monitor\topics\0430\米切尔研究所_深度专家分析_v2.md (31621 字符)
+
+[OK] 完成。

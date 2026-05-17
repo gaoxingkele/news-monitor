@@ -1,0 +1,146 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""Create defense document v1.2 from scratch"""
+
+import os
+from docx import Document
+from docx.shared import Pt, RGBColor, Inches
+from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.oxml.ns import qn
+
+dst = "姜某安寻衅滋事案_辩护意见书_v1.2.docx"
+
+doc = Document()
+
+# Set default font for the document
+style = doc.styles['Normal']
+style.font.name = '宋体'
+style.font.size = Pt(12)
+style._element.rPr.rFonts.set(qn('w:eastAsia'), '宋体')
+
+# Title
+title_para = doc.add_paragraph()
+title_para.alignment = WD_ALIGN_PARAGRAPH.CENTER
+title_run = title_para.add_run("姜某安寻衅滋事案辩护意见书")
+title_run.bold = True
+title_run.font.size = Pt(16)
+title_run.font.name = '黑体'
+title_run._element.rPr.rFonts.set(qn('w:eastAsia'), '黑体')
+
+# Spacing
+doc.add_paragraph()
+
+# Signature
+sig_para = doc.add_paragraph()
+sig_para.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+sig_run = sig_para.add_run("辩护人：[律师姓名]\n山东某律师事务所\n2025年X月X日")
+sig_run.font.size = Pt(12)
+
+doc.add_paragraph()
+
+# Section 1
+s1_title = doc.add_paragraph()
+s1_run = s1_title.add_run("一、案件基本情况")
+s1_run.bold = True
+s1_run.font.size = Pt(14)
+
+s1_content = (
+    "（一）案件事实概述\n\n"
+    "被告人姜某安于[具体时间]在[具体地点]因[具体原因]与被害人发生争执。侦查机关认定，被告人的行为致使被害人[具体后果]，依法应以寻衅滋事罪追究刑事责任。\n\n"
+    "（二）时间、地点及经过\n\n"
+    "经辩护人查阅卷宗材料，现阶段认定的案件时间、地点及经过如下：\n"
+    "时间：[具体时间]\n"
+    "地点：[具体地点]\n"
+    "经过：被告人姜某安与被害人因[纠纷起因]发生口角，后双方发生肢体冲突。被害人主张其受伤，但被告人辩称系正当防卫，具体情节有待进一步核实。\n\n"
+    "（三）涉案后果\n\n"
+    "被害人主张其在冲突中受伤，就医治疗产生医疗费共计人民币[具体金额]元，经鉴定构成[轻伤/轻微伤]。辩护人认为上述损失与被告人行为的因果关系及责任比例存在争议。"
+)
+p = doc.add_paragraph()
+p.add_run(s1_content).font.size = Pt(12)
+
+# Section 2
+doc.add_paragraph()
+s2_title = doc.add_paragraph()
+s2_run = s2_title.add_run("二、辩护意见")
+s2_run.bold = True
+s2_run.font.size = Pt(14)
+
+# 2.1
+s2_1_title = doc.add_paragraph()
+s2_1_run = s2_1_title.add_run("（一）关于寻衅滋事罪的法律构成要件分析")
+s2_1_run.bold = True
+s2_1_run.font.size = Pt(12)
+
+s2_1_content = (
+    "根据《中华人民共和国刑法》第二百九十三条之规定，寻衅滋事罪是指肆意挑衅，随意殴打、骚扰他人或者任意损毁、占用公私财物，或者在公共场所起哄闹事，严重破坏社会秩序的行为。构成本罪须同时具备以下要件：\n\n"
+    "1. 主观要件：行为人须具有寻衅的主观故意，即出于争霸、报复、发泄等不良动机，肆意挑衅他人。\n\n"
+    "2. 客观要件：行为人实施了随意殴打他人、追逐、拦截、辱骂、恐吓他人，或者强拿硬要、任意损毁、占用公私财物，或者在公共场所起哄闹事等行为。\n\n"
+    "3. 情节要件：须达到情节恶劣、严重破坏社会秩序或造成公共场所秩序严重混乱的程度。\n\n"
+    "4. 因果关系：行为与后果之间须存在直接因果关系。"
+)
+p = doc.add_paragraph()
+p.add_run(s2_1_content).font.size = Pt(12)
+
+# 2.2
+s2_2_title = doc.add_paragraph()
+s2_2_run = s2_2_title.add_run("（二）被告人姜某安的行为不构成寻衅滋事罪")
+s2_2_run.bold = True
+s2_2_run.font.size = Pt(12)
+
+s2_2_content = (
+    "1. 主观方面：被告人姜某安不具备寻衅的主观故意\n\n"
+    "根据卷宗材料显示，被告人与被害人之间存在[邻里关系/经济纠纷/其他合法原因]的特定背景。被告人并非出于肆意挑衅、发泄不良情绪而实施行为，而是在[具体原因]的情况下被动应对。辩护人认为，现有证据不足以证明被告人具有寻衅滋事罪所要求的主观故意。\n\n"
+    "2. 客观方面：被告人的行为不符合寻衅滋事罪的客观表现\n\n"
+    "寻衅滋事罪的行为特征为随意殴打他人，即行为人无缘由或仅为小事即肆意妄为。本案中，被害人与被告人之间存在[具体矛盾]，被告人系因[具体事由]而与被害人发生争执，行为具有特定的事出有因性，并非随意殴打。\n\n"
+    "3. 行为性质：被告人的行为更符合[正当防卫/紧急避险/民间纠纷]的性质\n\n"
+    "从案件全过程来看，若被告人系在[被害人先行侵害/双方互殴]的情况下采取的行动，则其行为性质应结合正当防卫制度予以评价，不宜径直认定为寻衅滋事。\n\n"
+    "4. 因果关系：被害人伤情与被告人行为的因果关系存疑\n\n"
+    "被害人主张的伤情是否确系被告人行为所致，还是系[自伤/其他原因]所致，现有证据不足以排除合理怀疑。根据疑点利益归于被告人的原则，不应将因果关系存疑的损害后果归责于被告人。"
+)
+p = doc.add_paragraph()
+p.add_run(s2_2_content).font.size = Pt(12)
+
+# 2.3
+s2_3_title = doc.add_paragraph()
+s2_3_run = s2_3_title.add_run("（三）关于本案鉴定意见的异议")
+s2_3_run.bold = True
+s2_3_run.font.size = Pt(12)
+
+s2_3_content = (
+    "1. 伤情鉴定的程序合法性存疑\n\n"
+    "经查阅卷宗，被害人的伤情鉴定结论存在[鉴定机构资质/鉴定程序/鉴定标准适用]等方面的疑问，辩护人将在庭审中依法申请重新鉴定或补充鉴定。\n\n"
+    "2. 损失认定的证据不足\n\n"
+    "被害人主张的医疗费、误工费等经济损失，其真实性、关联性尚需充分证据支持，不能仅凭被害人单方陈述或未经验证的票据认定。"
+)
+p = doc.add_paragraph()
+p.add_run(s2_3_content).font.size = Pt(12)
+
+# Section 3
+doc.add_paragraph()
+s3_title = doc.add_paragraph()
+s3_run = s3_title.add_run("三、结论与请求")
+s3_run.bold = True
+s3_run.font.size = Pt(14)
+
+s3_content = (
+    "综上所述，辩护人认为：\n\n"
+    "1. 被告人姜某安的行为依法不构成寻衅滋事罪。侦查机关认定的犯罪事实与寻衅滋事罪的法定构成要件不符，现有证据不能排除合理怀疑地证明被告人的行为符合本罪的主客观要件。\n\n"
+    "2. 退一步而言，即使法院认定被告人的行为具有一定的社会危害性，也应当考虑以下量刑情节：\n"
+    "   （1）被告人系[初犯/偶犯]，此前无任何违法犯罪记录；\n"
+    "   （2）被告人认罪态度良好，具有悔罪表现；\n"
+    "   （3）本案系[民间纠纷/邻里矛盾]引发，被害人对矛盾激化亦负有一定责任；\n"
+    "   （4）被告人愿意依法赔偿被害人合理损失。\n\n"
+    "3. 基于以上理由，辩护人恳请贵院依法查明案件事实，作出证据不足、指控罪名不能成立的无罪判决；或者在定罪的情况下，对被告人从轻、减轻处罚并适用缓刑。\n\n"
+    "此致\n\n"
+    "[受理检察院/法院全称]\n\n"
+    "辩护人：[律师姓名]\n"
+    "[律师事务所名称]\n"
+    "[日期]"
+)
+p = doc.add_paragraph()
+p.add_run(s3_content).font.size = Pt(12)
+
+doc.save(dst)
+print(f"Created: {dst}")
+print(f"Exists: {os.path.exists(dst)}")
+print(f"File size: {os.path.getsize(dst)} bytes")

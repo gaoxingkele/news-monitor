@@ -1,0 +1,13 @@
+{
+  "active": true,
+  "iteration": 57,
+  "max_iterations": 60,
+  "current_phase": "executing",
+  "started_at": "2026-04-10T05:35:00Z",
+  "task_description": "Continue completing the BRI Chinese-education task workbook and five-country assessments without stopping for confirmation.",
+  "context_snapshot_path": "D:\\\\aicoding\\\\news-monitor\\\\.omx\\\\context\\\\bri-5country-20260410T053500Z.md",
+  "latest_progress": "Updated official-only evidence to 2026-04-14 v3 and core contrast to v2. Thailand has now effectively graduated from a weak field to a directory-level counting problem via MHESI’s 103 Chinese-related programme entries.",
+  "last_turn_at": "2026-05-17T15:53:14.335Z",
+  "max_iterations_auto_expand_count": 10,
+  "max_iterations_auto_expanded_at": "2026-04-12T22:15:24.416Z"
+}
