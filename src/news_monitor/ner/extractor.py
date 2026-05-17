@@ -8,6 +8,7 @@ from typing import Any
 
 import httpx
 
+from news_monitor.cloubic import resolve_openai_compatible_endpoint
 from news_monitor.models import NewsArticle
 from news_monitor.ner.prompts import NER_SYSTEM_PROMPT
 from news_monitor.proxy import get_proxies_for_url
@@ -98,6 +99,21 @@ async def _call_ner_provider(
         return None
 
     base_url = os.environ.get(prov["base_url_env"], prov["base_url_default"])
+    model = prov["model"]
+    api_key, resolved_base_url, model_chain, via_cloubic = resolve_openai_compatible_endpoint(
+        provider_name,
+        direct_api_key=api_key,
+        direct_base_url=base_url,
+        direct_model=model,
+        reasoning=False,
+    )
+    if not api_key:
+        logger.error("Missing resolved API key for NER provider %s", provider_name)
+        return None
+
+    base_url = resolved_base_url.rstrip("/")
+    if base_url.endswith("/chat/completions"):
+        base_url = base_url[: -len("/chat/completions")]
     url = f"{base_url}/chat/completions"
 
     items = []
@@ -110,7 +126,7 @@ async def _call_ner_provider(
         })
 
     body = {
-        "model": prov["model"],
+        "model": model_chain[0],
         "messages": [
             {"role": "system", "content": NER_SYSTEM_PROMPT},
             {"role": "user", "content": json.dumps(items, ensure_ascii=False)},
@@ -119,13 +135,18 @@ async def _call_ner_provider(
     }
 
     proxy = None
-    if prov["overseas"]:
+    if prov["overseas"] and not via_cloubic:
         proxy = get_proxies_for_url(url, overseas_proxy)
 
     try:
-        async with httpx.AsyncClient(
-            timeout=60.0, proxy=proxy, follow_redirects=True
-        ) as client:
+        client_kwargs = {
+            "timeout": 60.0,
+            "follow_redirects": True,
+            "trust_env": False,
+        }
+        if proxy:
+            client_kwargs["proxy"] = proxy
+        async with httpx.AsyncClient(**client_kwargs) as client:
             resp = await client.post(
                 url, json=body,
                 headers={

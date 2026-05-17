@@ -14,6 +14,7 @@ import os
 import re
 from typing import Any
 
+from news_monitor.cloubic import resolve_openai_compatible_endpoint
 from news_monitor.models import NewsArticle
 from news_monitor.proxy import get_proxies_for_url, build_httpx_client
 
@@ -305,12 +306,26 @@ class SentimentClassifier:
         base_url = base_url.rstrip("/")
         if base_url.endswith("/chat/completions"):
             base_url = base_url[: -len("/chat/completions")]
-        url = f"{base_url}/chat/completions"
 
         model = prov["model"]
         model_env = prov.get("model_env")
         if model_env:
             model = os.environ.get(model_env, "") or model
+
+        api_key, resolved_base_url, model_chain, via_cloubic = resolve_openai_compatible_endpoint(
+            provider_name,
+            direct_api_key=api_key,
+            direct_base_url=base_url,
+            direct_model=model,
+            reasoning=(provider_name == "grok"),
+        )
+        if not api_key:
+            return None
+        base_url = resolved_base_url.rstrip("/")
+        if base_url.endswith("/chat/completions"):
+            base_url = base_url[: -len("/chat/completions")]
+        url = f"{base_url}/chat/completions"
+        model = model_chain[0]
 
         items = []
         for i, art in enumerate(batch):
@@ -328,7 +343,7 @@ class SentimentClassifier:
         }
 
         proxy = None
-        if prov["overseas"]:
+        if prov["overseas"] and not via_cloubic:
             proxy = get_proxies_for_url(url, self.overseas_proxy)
 
         try:

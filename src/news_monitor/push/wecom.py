@@ -79,7 +79,7 @@ class WeComChannel(PushChannel):
         self, body: dict, count: int, topic_name: str
     ) -> PushResult:
         try:
-            async with httpx.AsyncClient(timeout=15.0) as client:
+            async with httpx.AsyncClient(timeout=15.0, trust_env=False) as client:
                 resp = await client.post(self.webhook_url, json=body)
                 resp.raise_for_status()
                 data = resp.json()

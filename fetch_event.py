@@ -40,6 +40,7 @@ except ImportError:
 import logging
 
 from news_monitor.config_loader import load_config
+from news_monitor.cloubic import resolve_openai_compatible_endpoint
 from news_monitor.models import CycleReport, FetchResult, NewsArticle
 from news_monitor.sources.brave_search import BraveSearch
 from news_monitor.sources.gemini_search import GeminiSearch
@@ -567,13 +568,25 @@ async def _generate_executive_summary(
     if not api_key:
         return ""
 
-    base_url = os.environ.get("GROK_BASE_URL", "") or "https://api.x.ai/v1"
-    url = f"{base_url.rstrip('/')}/chat/completions"
-    proxy = get_proxies_for_url(url, overseas_proxy)
+    api_key, base_url, model_chain, via_cloubic = resolve_openai_compatible_endpoint(
+        "grok",
+        direct_api_key=api_key,
+        direct_base_url=os.environ.get("GROK_BASE_URL", "") or "https://api.x.ai/v1",
+        direct_model="grok-4-1-fast-reasoning",
+        reasoning=True,
+    )
+    if not api_key:
+        return ""
+
+    base_url = base_url.rstrip("/")
+    if base_url.endswith("/chat/completions"):
+        base_url = base_url[: -len("/chat/completions")]
+    url = f"{base_url}/chat/completions"
+    proxy = None if via_cloubic else get_proxies_for_url(url, overseas_proxy)
 
     try:
         body = {
-            "model": "grok-4-1-fast-reasoning",
+            "model": model_chain[0],
             "messages": [
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_msg},

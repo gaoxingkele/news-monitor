@@ -65,9 +65,14 @@ class WorldNewsSource(NewsSource):
         proxy = get_proxies_for_url(_API_BASE, self.overseas_proxy)
         articles: list[NewsArticle] = []
         try:
-            async with httpx.AsyncClient(
-                timeout=30.0, proxy=proxy, follow_redirects=True
-            ) as client:
+            client_kwargs = {
+                "timeout": 30.0,
+                "follow_redirects": True,
+                "trust_env": False,
+            }
+            if proxy:
+                client_kwargs["proxy"] = proxy
+            async with httpx.AsyncClient(**client_kwargs) as client:
                 resp = await client.get(
                     _API_BASE, params=params,
                     headers={"x-api-key": api_key},

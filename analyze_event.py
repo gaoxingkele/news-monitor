@@ -32,6 +32,7 @@ except ImportError:
     pass
 
 from news_monitor.proxy import get_proxies_for_url, build_httpx_client
+from news_monitor.cloubic import resolve_openai_compatible_endpoint
 from news_monitor.media_tier import get_tier, get_tier_label
 from news_monitor.trend import record_snapshot
 
@@ -51,12 +52,24 @@ async def _call_grok(
     if not api_key:
         raise RuntimeError("GROK_API_KEY not set")
 
-    base_url = os.environ.get("GROK_BASE_URL", "") or "https://api.x.ai/v1"
-    url = f"{base_url.rstrip('/')}/chat/completions"
-    proxy = get_proxies_for_url(url, overseas_proxy)
+    api_key, base_url, model_chain, via_cloubic = resolve_openai_compatible_endpoint(
+        "grok",
+        direct_api_key=api_key,
+        direct_base_url=os.environ.get("GROK_BASE_URL", "") or "https://api.x.ai/v1",
+        direct_model=model,
+        reasoning=True,
+    )
+    if not api_key:
+        raise RuntimeError("resolved Grok/Cloubic API key not set")
+
+    base_url = base_url.rstrip("/")
+    if base_url.endswith("/chat/completions"):
+        base_url = base_url[: -len("/chat/completions")]
+    url = f"{base_url}/chat/completions"
+    proxy = None if via_cloubic else get_proxies_for_url(url, overseas_proxy)
 
     body = {
-        "model": model,
+        "model": model_chain[0],
         "messages": [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_msg},

@@ -98,7 +98,7 @@ class FeishuChannel(PushChannel):
             card["sign"] = sign
 
         try:
-            async with httpx.AsyncClient(timeout=15.0) as client:
+            async with httpx.AsyncClient(timeout=15.0, trust_env=False) as client:
                 resp = await client.post(self.webhook_url, json=card)
                 resp.raise_for_status()
                 data = resp.json()

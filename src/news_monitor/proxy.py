@@ -1,37 +1,21 @@
-"""Proxy routing — overseas APIs through proxy, domestic direct."""
+"""Proxy routing — only selected APIs go through proxy, all others direct."""
 from __future__ import annotations
 
 import httpx
 
-# Domains that should go through the overseas proxy
-_OVERSEAS_DOMAINS = {
-    "newsdata.io",
-    "eventregistry.org",       # NewsAPI.ai backend
-    "serpapi.com",
+# Domains that MUST use the configured proxy.
+# Everything else is forced to connect directly, including Cloubic, Grok, Gemini,
+# NewsData, SerpAPI, push webhooks, and domestic providers.
+_PROXY_DOMAINS = {
+    "api.search.brave.com",
+    "api.tavily.com",
     "api.perplexity.ai",
-    "api.worldnewsapi.com",
-    "api.openai.com",
-    "generativelanguage.googleapis.com",
-    "www.googleapis.com",              # Google Custom Search API
-    "api.search.brave.com",            # Brave Search API
-    "api.x.ai",                        # Grok / xAI API
-}
-
-# Domestic providers — direct connection, no proxy
-_DOMESTIC_DOMAINS = {
-    "api.deepseek.com",
-    "api.moonshot.cn",           # Kimi
-    "open.bigmodel.cn",          # GLM
-    "dashscope.aliyuncs.com",    # Qwen
-    "open.feishu.cn",
-    "oapi.dingtalk.com",
-    "qyapi.weixin.qq.com",
 }
 
 
 def _is_overseas(url: str) -> bool:
-    """Check if the URL targets an overseas domain."""
-    for domain in _OVERSEAS_DOMAINS:
+    """Return True only for domains explicitly routed through proxy."""
+    for domain in _PROXY_DOMAINS:
         if domain in url:
             return True
     return False
@@ -41,9 +25,10 @@ def build_httpx_client(
     proxy_url: str = "",
     timeout: float = 30.0,
 ) -> httpx.AsyncClient:
-    """Create an httpx.AsyncClient with optional proxy for overseas APIs.
+    """Create an AsyncClient with explicit proxy policy.
 
-    The caller should use this as an async context manager or close it manually.
+    - `trust_env=False` ensures system proxy settings do not leak into direct calls
+    - only callers that pass `proxy_url` will use a proxy
     """
     transport_kwargs: dict = {}
     if proxy_url:
@@ -52,6 +37,7 @@ def build_httpx_client(
     return httpx.AsyncClient(
         timeout=httpx.Timeout(timeout),
         follow_redirects=True,
+        trust_env=False,
         **transport_kwargs,
     )
 

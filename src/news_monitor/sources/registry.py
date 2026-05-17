@@ -4,27 +4,19 @@ from __future__ import annotations
 from typing import Type
 
 from news_monitor.sources.base import NewsSource
-from news_monitor.sources.newsdata_io import NewsDataIO
-from news_monitor.sources.newsapi_ai import NewsAPIAI
-from news_monitor.sources.serpapi_google import SerpAPIGoogle
 from news_monitor.sources.perplexity import PerplexitySource
-from news_monitor.sources.worldnews import WorldNewsSource
-from news_monitor.sources.google_cse import GoogleCSE
 from news_monitor.sources.brave_search import BraveSearch
 from news_monitor.sources.gemini_search import GeminiSearch
 from news_monitor.sources.grok_search import GrokWebSearch, GrokXSearch
+from news_monitor.sources.tavily_search import TavilySearch
 
 _REGISTRY: dict[str, Type[NewsSource]] = {
-    "newsdata_io": NewsDataIO,
-    "newsapi_ai": NewsAPIAI,
-    "serpapi_google": SerpAPIGoogle,
     "perplexity": PerplexitySource,
-    "worldnews": WorldNewsSource,
-    "google_cse": GoogleCSE,
     "brave_search": BraveSearch,
     "gemini_search": GeminiSearch,
     "grok_web_search": GrokWebSearch,
     "grok_x_search": GrokXSearch,
+    "tavily_search": TavilySearch,
 }
 
 

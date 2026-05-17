@@ -109,9 +109,14 @@ async def _call_embedding_api(
     }
 
     try:
-        async with httpx.AsyncClient(
-            timeout=60.0, proxy=proxy, follow_redirects=True
-        ) as client:
+        client_kwargs = {
+            "timeout": 60.0,
+            "follow_redirects": True,
+            "trust_env": False,
+        }
+        if proxy:
+            client_kwargs["proxy"] = proxy
+        async with httpx.AsyncClient(**client_kwargs) as client:
             resp = await client.post(
                 url, json=body,
                 headers={

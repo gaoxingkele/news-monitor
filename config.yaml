@@ -4,7 +4,14 @@ schedule:
   timezone: "Asia/Shanghai"
 
 proxy:
+  # Only Brave / Tavily / Perplexity are routed through this proxy.
+  # All other providers, including Cloubic / Grok / Gemini / NewsData / SerpAPI,
+  # are forced to connect directly in code.
   overseas_proxy: "${LLM_PROXY}"
+  proxy_only_domains:
+    - "api.search.brave.com"
+    - "api.tavily.com"
+    - "api.perplexity.ai"
 
 sources:
   brave_search:
@@ -57,11 +64,12 @@ topics_dir: topics
 
 translation:
   target_language: "zh-CN"
-  provider: "qwen"
+  provider: "grok"
   fallback_chain:
+    - "gemini"
+    - "qwen"
     - "deepseek"
     - "doubao"
-    - "grok"
     - "glm"
   batch_size: 0
   skip_if_language: "zh"

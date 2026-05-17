@@ -33,6 +33,7 @@ from datetime import date, timedelta
 from news_monitor.config_loader import load_config
 from news_monitor.filter.relevance_filter import RelevanceFilter
 from news_monitor.models import CycleReport, FetchResult, NewsArticle
+from news_monitor.output.all_url_catalog import update_all_url_excel
 from news_monitor.output.pdf_reporter import generate_report
 from news_monitor.sources.brave_search import BraveSearch
 from news_monitor.sources.gemini_search import GeminiSearch
@@ -860,6 +861,20 @@ async def _run_country(
     print(f"  Translate    : {trans_cfg.get('provider', 'qwen')}")
     print(f"  Filter       : {filter_cfg.get('provider', 'grok')}")
     print(f"{'=' * 72}")
+
+    try:
+        url_stats = update_all_url_excel(
+            filtered,
+            country_code=country_code,
+            country_label=country_code.upper(),
+            output_path="output/allURL.xlsx",
+        )
+        print(
+            f"allURL.xlsx updated: +{url_stats['new_domains']} domains, "
+            f"+{url_stats['new_article_entries']} article-domain entries"
+        )
+    except Exception as exc:
+        print(_warn(f"allURL.xlsx update failed: {type(exc).__name__}: {exc}"))
 
     # -- Generate report -------------------------------------------------------
     report = CycleReport(
